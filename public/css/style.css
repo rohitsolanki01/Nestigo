@@ -1,0 +1,393 @@
+/* Base Styles */
+body {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.h1_index {
+  padding: 1rem 1.9rem !important;
+  font-size: 2rem !important;
+  margin-top: 1.5rem;
+}
+
+.container {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+/* Navbar */
+.navbar {
+  height: auto;
+  min-height: 5rem;
+  background-color: white;
+  padding: 1rem;
+}
+
+.nav-link {
+  color: #222222 !important;
+  padding: 0.5rem 1rem;
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 0.5rem;
+}
+
+/* Footer */
+.f-info-links a {
+  text-decoration: none;
+  color: #222222;
+  margin: 0 0.5rem;
+}
+
+.f-info-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-info {
+  text-align: center;
+  display: flex;
+  height: auto;
+  min-height: 8rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.f-info-social, .f-info-links, .name {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0.5rem 0;
+}
+
+.f-info-social i {
+  margin: 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+/* Cards */
+.listing-card {
+  margin: 1rem 0;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  background-color: #fff;
+  border: none !important;
+  border-radius: 1rem;
+  box-shadow: none;
+  width: 100%;
+}
+
+.listing-card:hover {
+  transform: scale(1.02);
+}
+
+.listing-card img {
+  width: 100%;
+  height: auto;
+  min-height: 18.75rem;
+  max-height: 25rem;
+  object-fit: cover;
+  border-radius: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.card-body {
+  padding: 0.75rem 0.5rem 0 0;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  color: #222;
+  margin: 0;
+  padding: 0.4rem 0;
+}
+
+.listing-title {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0.5rem 0 0.25rem;
+  color: #111;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+}
+
+/* Buttons */
+.button, .edit-btn, .btns a, .btns form button, .review_btn {
+  background-color: rgb(17, 17, 75) !important;
+  color: white;
+  margin: 1rem 0;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover, .edit-btn:hover, .btns a:hover, .btns form button:hover, .review_btn:hover {
+  transform: scale(1.05);
+  border-radius: 1rem;
+}
+
+/* Edit Page */
+.edit_preview_image {
+  height: 10rem !important;
+  width: 100% !important;
+  max-width: 30rem;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+}
+
+/* Show Page */
+.show-img {
+  height: auto;
+  max-height: 40vh;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+/* Buttons Group */
+.btns, .review_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+/* Error Message */
+.error-box {
+  margin: 2rem auto;
+  text-align: center;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.error-icon img {
+  width: 100%;
+  max-width: 300px;
+  animation: bounce 2s infinite;
+}
+
+.error-title {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+
+.error-message {
+  margin-top: 0.5rem;
+  color: #555;
+  font-size: 1rem;
+}
+
+@keyframes bounce {
+  0%, 100% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(-20px);
+  }
+}
+
+/* Map */
+.listing-details {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.map-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+#location-input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  min-width: 200px;
+}
+
+#update-map, #locate-me {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#map.map-container {
+  height: 30rem;
+  width: 45vw;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Filters */
+#filters {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1rem auto;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filter {
+  margin: 0.5rem;
+  text-align: center;
+  opacity: 0.7;
+  flex: 1 0 auto;
+  min-width: 100px;
+}
+.filter a{
+  text-decoration: none;
+  color: black;
+  opacity: 0.7;
+}
+
+.filter:hover {
+  opacity: 1;
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.text-info {
+  display: none;
+  color: black !important;
+}
+
+/* Toggler */
+.text-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black !important;
+  border-radius: 2rem;
+  height: 3rem;
+  width: 100%;
+  max-width: 15rem;
+  margin: 1rem auto;
+  padding: 0 1rem;
+}
+
+/* Search Bar */
+.btn-search {
+  background-color: rgb(17, 17, 75) !important;
+  color: white !important;
+  border-radius: 2rem !important;
+  padding: 0.5rem 1rem !important;
+}
+
+.btn-search i {
+  display: inline;
+  margin-right: 0.4rem;
+}
+
+.search-nest {
+  border-radius: 2rem !important;
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+.serch-inp{
+  border-radius: 2rem !important;
+  padding:0 3rem 0 3rem!important;
+  width: 100%;
+}
+
+/* Responsive Grid for Listings */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -0.5rem;
+}
+
+.col-md-3, .col-sm-6 {
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+}
+
+/* Media Queries */
+@media (max-width: 767px) {
+  .h1_index {
+      font-size: 1.5rem !important;
+      padding: 0.5rem !important;
+      margin-top: 1rem;
+  }
+  
+  .navbar {
+      height: auto;
+      padding: 0.5rem;
+  }
+  
+  .listing-card img {
+      min-height: 12rem;
+  }
+  
+  .footer-info {
+      flex-direction: column;
+      height: auto;
+      padding: 1rem 0;
+  }
+  
+  .f-info-social, .f-info-links, .name {
+      margin: 0.5rem 0;
+  }
+  
+  .btns, .review_btn {
+      flex-direction: column;
+      gap: 0.5rem;
+  }
+  
+  #map.map-container {
+      height: 20rem;
+  }
+  
+  .text-toggle {
+      width: 100%;
+      margin: 0.5rem auto;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .col-md-3 {
+      flex: 0 0 50%;
+      max-width: 50%;
+  }
+}
+
+@media (min-width: 992px) {
+  .col-md-3 {
+      flex: 0 0 25%;
+      max-width: 25%;
+  }
+}
