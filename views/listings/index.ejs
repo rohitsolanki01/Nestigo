@@ -63,9 +63,15 @@
         <div class="card-body">
           <p class="card-text">
             <b> <%= listing.title %></b> <br />
-            &#8377;<%= listing.price ? listing.price.toLocaleString('en-IN') :
-            'N/A' %> / night
-            <i class="text-info"> &nbsp; &nbsp;+18% GST</i>
+            &#8377;<%= listing.price ? listing.price.toLocaleString('en-IN') : 'N/A' %> / night
+            <i class="text-info" style="display: none;"> 
+              &nbsp; &nbsp;+18% GST: 
+              &#8377;<%= listing.price ? Math.round(listing.price * 0.18).toLocaleString('en-IN') : 'N/A' %>
+              <br/>
+              <span class="gst-total">
+                Total: &#8377;<%= listing.price ? Math.round(listing.price * 1.18).toLocaleString('en-IN') : 'N/A' %> / night
+              </span>
+            </i>
           </p>
 
         </div>
