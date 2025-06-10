@@ -92,9 +92,16 @@ app.use((req,res,next) => {
   next(); 
 })
 
-app.get("/" , (req,res) => {
-  res.render("listings/index.ejs");
-})
+app.get("/", async (req, res) => {
+  try {
+      const allListings = await Listing.find({}); // Adjust based on your model
+      
+      res.render("listings/index.ejs", { allListings });
+  } catch (error) {
+      console.error("Error fetching listings:", error);
+      res.status(500).render("error", { message: "Unable to load listings" });
+  }
+});
 
 app.use("/listings" , listingsRouter);
 
