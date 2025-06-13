@@ -23,16 +23,7 @@
   }, 3000); 
 
   //loader 
-      document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function(e) {
-          const href = this.getAttribute("href");
-          if (href.startsWith("#") || href.startsWith("javascript:")) {
-            return; 
-          }
-          e.preventDefault();
-          document.getElementById('loader-container').style.display = 'flex';
-          setTimeout(() => {
-            window.location.href = href;
-          }, 200);
-        });
-      });
+  window.addEventListener("load", function () {
+    document.getElementById("preloader").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+  });
