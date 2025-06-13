@@ -24,6 +24,9 @@
 
   //loader 
   window.addEventListener("load", function () {
-    document.getElementById("preloader").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
+    const loader = document.getElementById("preloader");
+    loader.style.transition = "opacity 0.5s";
+    loader.style.opacity = "0";
+    setTimeout(() => loader.style.display = "none", 600);
   });
+  
