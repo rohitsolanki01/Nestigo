@@ -105,23 +105,11 @@
   </div>
 
 </div>
-<script
-  src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-  integrity="sha512-Dqm3h1Y4qiHUjbhxTuBGQsza0Tfppn53SHlu/uj1f+RT+xfShfe7r6czRf5r2NmllO2aKx+tYJgoxboOkn1Scg=="
-  crossorigin=""
-></script>
-<script>
-  // Initialize map when document is ready
-  document.addEventListener('DOMContentLoaded', function() {
-    const location = "<%= listing.location %>";
-    if (location) {
-      geocodeAndRender(location);
-    }
-  });
-</script>
+
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha512-Dqm3h1Y4qiHUjbhxTuBGQsza0Tfppn53SHlu/uj1f+RT+xfShfe7r6czRf5r2NmllO2aKx+tYJgoxboOkn1Scg==" crossorigin=""></script>
 
 <script>
-   const apiKey = "<%= geoapifyApiKey %>";
+  const apiKey = "<%= geoapifyApiKey %>";
   let map, marker;
 
   const hotelIcon = L.icon({
@@ -132,75 +120,98 @@
     className: "hotel-icon"
   });
 
-  function createMap(lat, lon, label) {
-    if (!map) {
-      map = L.map("map", { zoomControl: false }).setView([lat, lon], 14);
+  // Initialize map once
+  function initMap(lat = 20, lon = 78, zoom = 5) {
+    map = L.map("map", { zoomControl: false }).setView([lat, lon], zoom);
 
-      L.tileLayer(`https://maps.geoapify.com/v1/tile/osm-carto/{z}/{x}/{y}.png?apiKey=${apiKey}`, {
-        attribution: '&copy; <a href="https://www.geoapify.com/">Geoapify</a>',
-        maxZoom: 20
-      }).addTo(map);
-    } else {
-      map.setView([lat, lon], 14);
-    }
-
-    if (marker) map.removeLayer(marker);
-
-    marker = L.marker([lat, lon], { icon: hotelIcon, draggable: true }).addTo(map)
-      .bindPopup(`<b>${label}</b>`).openPopup();
-
-    // Drag updates address input
-    marker.on("dragend", () => {
-      const pos = marker.getLatLng();
-      reverseGeocode(pos.lat, pos.lng);
-    });
+    L.tileLayer(`https://maps.geoapify.com/v1/tile/osm-carto/{z}/{x}/{y}.png?apiKey=${apiKey}`, {
+      attribution: '&copy; <a href="https://www.geoapify.com/">Geoapify</a>',
+      maxZoom: 20
+    }).addTo(map);
   }
 
+  // Create or update marker
+  function updateMarker(lat, lon, label = "Location") {
+    if (marker) {
+      marker.setLatLng([lat, lon]);
+    } else {
+      marker = L.marker([lat, lon], { icon: hotelIcon, draggable: true }).addTo(map);
+      marker.on("dragend", () => {
+        const pos = marker.getLatLng();
+        reverseGeocode(pos.lat, pos.lng);
+      });
+    }
+    map.setView([lat, lon], 14);
+    marker.bindPopup(`<b>${label}</b>`).openPopup();
+  }
+
+  // Geocode location string into lat/lon
   function geocodeAndRender(location) {
     fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(location)}&apiKey=${apiKey}`)
       .then(res => res.json())
       .then(data => {
         if (data.features.length) {
           const [lon, lat] = data.features[0].geometry.coordinates;
-          createMap(lat, lon, location);
+          updateMarker(lat, lon, location);
         } else {
           alert("Location not found");
         }
-      });
+      })
+      .catch(err => console.error("Geocode Error:", err));
   }
 
+  // Reverse geocode lat/lon into address
   function reverseGeocode(lat, lon) {
     fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=${apiKey}`)
       .then(res => res.json())
       .then(data => {
         if (data.features.length) {
-          document.getElementById("location-input").value = data.features[0].properties.formatted;
+          const formatted = data.features[0].properties.formatted;
+          const locationInput = document.getElementById("location-input");
+          if (locationInput) locationInput.value = formatted;
         }
-      });
+      })
+      .catch(err => console.error("Reverse Geocode Error:", err));
   }
 
+  // Use browser geolocation
   function locateUser() {
+    if (!navigator.geolocation) {
+      alert("Geolocation not supported.");
+      return;
+    }
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
+      pos => {
         const { latitude, longitude } = pos.coords;
-        setTimeout(() => {
-          reverseGeocode(latitude, longitude);
-          createMap(latitude, longitude, "My Location");
-        }, 100); // slight delay to ensure DOM is ready
+        reverseGeocode(latitude, longitude);
+        updateMarker(latitude, longitude, "My Location");
       },
       () => alert("Permission denied or location unavailable")
     );
   }
 
+  // When DOM fully loaded
   document.addEventListener("DOMContentLoaded", () => {
-    const initialLocation = document.getElementById("location-input").value;
-    geocodeAndRender(initialLocation);
+    const location = "<%= listing.location %>";
 
-    document.getElementById("update-map").addEventListener("click", () => {
-      const locationText = document.getElementById("location-input").value;
-      if (locationText) geocodeAndRender(locationText);
-    });
+    initMap(); // Always initialize map
 
-    document.getElementById("locate-me").addEventListener("click", locateUser);
+    if (location) {
+      geocodeAndRender(location);
+    }
+
+    const updateBtn = document.getElementById("update-map");
+    const locateBtn = document.getElementById("locate-me");
+
+    if (updateBtn) {
+      updateBtn.addEventListener("click", () => {
+        const locationText = document.getElementById("location-input").value;
+        if (locationText) geocodeAndRender(locationText);
+      });
+    }
+
+    if (locateBtn) {
+      locateBtn.addEventListener("click", locateUser);
+    }
   });
 </script>
