@@ -173,8 +173,6 @@
   function locateUser() {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        // Sometimes the map may not show if the container is hidden or not rendered yet.
-        // Ensure the map container is visible and properly sized before creating the map.
         const { latitude, longitude } = pos.coords;
         setTimeout(() => {
           reverseGeocode(latitude, longitude);
