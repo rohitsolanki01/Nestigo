@@ -110,6 +110,15 @@
   integrity="sha512-Dqm3h1Y4qiHUjbhxTuBGQsza0Tfppn53SHlu/uj1f+RT+xfShfe7r6czRf5r2NmllO2aKx+tYJgoxboOkn1Scg=="
   crossorigin=""
 ></script>
+<script>
+  // Initialize map when document is ready
+  document.addEventListener('DOMContentLoaded', function() {
+    const location = "<%= listing.location %>";
+    if (location) {
+      geocodeAndRender(location);
+    }
+  });
+</script>
 
 <script>
    const apiKey = "<%= geoapifyApiKey %>";
