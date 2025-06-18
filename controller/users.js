@@ -59,3 +59,5 @@ module.exports.logOut = (req,res,next) => {
       res.redirect("/listings");
     })
 }
+
+

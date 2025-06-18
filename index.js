@@ -62,7 +62,13 @@ app.engine("ejs", ejsMate);
 
 
 async function main() {
-  mongoose.connect(db_Url);
+  mongoose.connect(db_Url, {
+    serverSelectionTimeoutMS: 5000, 
+  tls: true,
+  tlsAllowInvalidCertificates: false, 
+  tlsCertificateKeyFile: null, 
+  });
+  
 }
 main()
   .then((res) => {
@@ -87,13 +93,14 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req,res,next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");  
-  res.locals.currentUser = req.user;
+  res.locals.currentUser = req.user; 
   next(); 
-})
+});
+
 
 app.get("/", async (req, res) => {
   try {
-      const allListings = await Listing.find({}); // Adjust based on your model
+      const allListings = await Listing.find({}); 
       
       res.render("listings/index.ejs", { allListings });
   } catch (error) {
@@ -101,6 +108,20 @@ app.get("/", async (req, res) => {
       res.status(500).render("error", { message: "Unable to load listings" });
   }
 });
+
+app.get("/user/:id" ,async   (req,res) => {
+  let { id } = req.params;
+  let user = await User.findById(id);
+  const listings = await Listing.find({ owner: user }).populate("owner");
+  res.render("users/profile.ejs" , {user , listings});
+})
+
+app.get("/user/:id/listings" , async (req,res) => {
+      let {id } =req.params;
+      let user = await User.findById(id);
+      const userListings = await Listing.find({ owner: user }).populate("owner");
+    res.render("users/userListings.ejs" , {user , userListings});
+})
 
 app.use("/listings" , listingsRouter);
 
