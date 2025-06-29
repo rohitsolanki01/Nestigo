@@ -1,0 +1,32 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-4 mb-2">
+    <div class="booking-card">
+        
+        <div class="price-section">
+            <div class="price"><%= listing.price %></div>
+            <div class="duration">for 1 nights</div>
+        </div>
+
+        <form method="POST" action="/listings/<%= listing._id %>/booking">
+        <div class="form-section">
+            <h2 class="form-title">Select Date & Time</h2>
+    
+            <div class="date-time-grid">
+                <div class="input-group">
+                    <label class="input-label">CHECK-IN</label>
+                    <input type="date" class="input-field" id="checkin" name="checkIn" value="2025-07-25">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">CHECKOUT</label>
+                    <input type="date" class="input-field" id="checkout" name="checkOut" value="2025-07-27">
+                </div>
+            </div>
+            <button class="reserve-button">Book now</button>
+            <p class="disclaimer">You won't be charged yet</p>
+        </div>
+    </form>
+    </div>
+</div>
+
+

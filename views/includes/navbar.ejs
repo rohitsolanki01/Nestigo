@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md bg-body-light bg-light border-bottom sticky-top">
-    <div class="container-fluid">
+    <div class="container-fluid ">
         <a class="navbar-brand" href="/listings">
             <img src="/accets/logo.png" alt="Logo" height="60">
           </a>
@@ -28,19 +28,13 @@
           <% if(!currentUser) { %>
             <a class="nav-link" href="/signup"><b>Sign Up</b></a>
             <a class="nav-link" href="/login"><b>Login</b></a>
-            <% } %>
-       <% if(currentUser) { %>  
-        <a class="nav-link" href="/logout"><b>Log out</b></a>
-        <% } %>
-        <% if(currentUser) {%>
-          <div class="profile">
-            <a href="/user/<%=currentUser._id %>"><i class="fa-solid fa-user"></i></a>
-          </div>
-      
-        <% }%>
-       
+          <% } else { %>  
+            <a class="nav-link" href="/logout"><b>Log out</b></a>
+            <div class="profile">
+              <a href="/user/<%=currentUser._id %>"><i class="fa-solid fa-user"></i></a>
+            </div>
+          <% } %>
         </div>  
       </div>
     </div>
   </nav>
-  

@@ -15,13 +15,14 @@ const  flash = require('connect-flash');
 const listingsRouter = require("./routes/listings.js");
 const reviewsRouter = require("./routes/reviews.js");
 const userRouter = require("./routes/user.js");
-
 const passport = require("passport");
 const LocalStratergy = require("passport-local");
 const User = require("./models/user.js");
 const { log } = require('console');
 const Listing = require("./models/listing.js");
-
+const Booking = require("./models/booking.js");
+const { appendFile } = require('fs');
+const { isLoggedIn } = require('./middleware.js');
 
 const db_Url = process.env.MONGO_ATLAS_DB
 
@@ -123,9 +124,89 @@ app.get("/user/:id/listings" , async (req,res) => {
     res.render("users/userListings.ejs" , {user , userListings});
 })
 
+app.get("/booking/:ListingId", async(req,res) => {
+  if(!req.isAuthenticated()) {
+    req.flash("error", "You must be logged in to book a listing");
+    return res.redirect("/login");
+  }
+  
+  try {
+    let { ListingId } = req.params;
+    let listing = await Listing.findById(ListingId);
+    if(!listing) {
+      req.flash("error", "Listing not found");
+      return res.redirect("/listings");
+    }
+    res.render("booking/booking.ejs", {listing});
+  } catch(err) {
+    console.error(err);
+    req.flash("error", "Error loading booking page");
+    res.redirect("/listings");
+  }
+});
+
+app.post("/listings/:id/booking",async(req, res) => {
+  try {
+    const listingId = req.params.id;
+    const guestId = req.user._id;
+
+    const { checkIn, checkOut } = req.body;
+
+    const newBooking = new Booking({
+      listingId,
+      guestId,
+      checkIn,
+      checkOut,
+      paymentStatus: "pending",
+    });
+
+    const savedBooking = await newBooking.save();
+
+    console.log(savedBooking);
+
+    req.flash("success", "Booking successfully booked");
+
+    res.redirect(`/listings/${listingId}`);
+  } catch (err) {
+    res.status(500).json({ error: "Booking failed", details: err.message });
+  }
+});
+
+
+app.get("/user/:listingId/booking", async (req, res) => {
+  if (!req.user) return res.redirect("/login");
+
+  try {
+    const bookings = await Booking.find({ guestId: req.user._id })
+      .populate("listingId"); 
+    res.render("users/userBooking.ejs", { bookings, user: req.user });
+  } catch (err) {
+    console.error(err);
+    res.send("Error loading profile");
+  }
+});
+
+app.delete("/bookings/:id", async (req, res) => {
+  try {
+    const bookingId = req.params.id;
+    await Booking.findByIdAndDelete(bookingId);
+
+    req.flash("success", "Booking cancelled successfully.");
+    res.redirect(`/user/${bookingId }/booking`); // redirect after delete
+  } catch (error) {
+    console.error("Error deleting booking:", error);
+    req.flash("error", "Something went wrong.");
+    res.redirect("users/userBooking.ejs");
+  }
+});
+
+
+
 app.use("/listings" , listingsRouter);
 
 app.use("/listings/:id/reviews" ,reviewsRouter);
+
+
 
 app.use("/" , userRouter)
 
