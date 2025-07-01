@@ -1,7 +1,7 @@
 <% layout("/layouts/boilerplate") %>
 
 
-<div class="container mt-3 mb-3 d-flex justify-content-center ">
+<div class="container mt-5 d-flex justify-content-center ">
     <div class="card shadow-sm p-3" style="max-width: 500px;">
       <div class="card-body">
         <h4 class="card-title mb-0"><%= user.username %></h4>
@@ -16,13 +16,6 @@
           <li><strong>Properties Listed:</strong><%= listings.length %></li>
           <li><strong>Languages:</strong> English, Hindi</li>
         </ul>
-
-        <div class="mt-4 d-flex justify-content-between">
-          <a href="/user/<%= user._id %>/listings" class="view_list_btn">View Listings</a>
-        </div>
-        <div class="mt-4 d-flex justify-content-between">
-          <a href="/user/<%= user._id %>/booking" class="view_list_btn">View Bookings</a>
-        </div>
       </div>
     </div>
   </div>

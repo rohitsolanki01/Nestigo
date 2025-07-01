@@ -1,0 +1,41 @@
+<% layout("/layouts/boilerplate") %>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold">Get in Touch</h1>
+        <p class="text-muted">Whether you're a host, traveler, or curious soul — we're here to help.</p>
+      </div>
+
+      <form action="user/contact" method="POST" class="p-4 shadow rounded bg-white">
+        <div class="mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Your name" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="subject" class="form-label">Subject</label>
+          <input type="text" class="form-control" id="subject" name="subject" placeholder="How can we help you?" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea class="form-control" id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-search">Send Message</button>
+        </div>
+      </form>
+
+      <div class="text-center mt-4">
+        <p class="text-muted">Prefer email? Reach us directly at <strong>support@nestigo.com</strong></p>
+      </div>
+    </div>
+  </div>
+</div>

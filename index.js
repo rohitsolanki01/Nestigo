@@ -23,7 +23,8 @@ const Listing = require("./models/listing.js");
 const Booking = require("./models/booking.js");
 const { appendFile } = require('fs');
 const { isLoggedIn } = require('./middleware.js');
-
+const Contact = require("./models/contact.js");
+const Subscriber = require("./models/subscribe.js")
 const db_Url = process.env.MONGO_ATLAS_DB
 
 
@@ -192,7 +193,7 @@ app.delete("/bookings/:id", async (req, res) => {
     await Booking.findByIdAndDelete(bookingId);
 
     req.flash("success", "Booking cancelled successfully.");
-    res.redirect(`/user/${bookingId }/booking`); // redirect after delete
+    res.redirect(`/user/${bookingId }/booking`); 
   } catch (error) {
     console.error("Error deleting booking:", error);
     req.flash("error", "Something went wrong.");
@@ -200,8 +201,45 @@ app.delete("/bookings/:id", async (req, res) => {
   }
 });
 
+app.get("/aboutus", (req,res) => {
+  res.render("more/aboutUs.ejs");
+});
 
+app.get("/contactUs" , (req,res) => {
+  res.render("more/contectUs.ejs")
+})
 
+app.post("/user/contact" , async(req,res) => {
+  try {
+
+  const { name, email, message , subject } = req.body;
+  const contact = new  Contact({ name, email, message, subject });
+  const saveContact = await contact.save();
+  console.log(saveContact);
+ req.flash("success" ,"Message Was succefully send");
+  res.redirect("/listings");
+ 
+  }catch{
+    req.flash("error" ,"something went wrong");
+  }
+});
+
+app.post("/subscribe" ,async(req,res) => {
+  try{
+     const {email} = req.body;
+  const newSubscriber = new Subscriber({ email });
+  const saveSubscriber = await newSubscriber.save();
+  console.log(saveSubscriber);
+  req.flash("success" ,"You have been subscribed");
+  res.redirect("/listings");
+  }catch{
+    req.flash("error" ,"something went wrong");
+  }
+});
+
+app.get("/help" ,(req,res) => {
+  res.render("more/help.ejs");
+})
 app.use("/listings" , listingsRouter);
 
 app.use("/listings/:id/reviews" ,reviewsRouter);

@@ -40,47 +40,63 @@ body {
   border: none;
   padding: 0.5rem;
 }
+@media (max-width: 767.98px) {
+  #navbarNavAltMarkup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    z-index: 1050;
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    transition: all 0.2s ease-in-out;
+  }
 
-for the navbar animation and some new add
+  .navbar-collapse.collapse:not(.show) {
+    display: none !important;
+  }
 
-/* Footer */
-.f-info-links a {
-  text-decoration: none;
-  color: #222222;
-  margin: 0 0.5rem;
+  .navbar-nav {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .navbar-nav .nav-link,
+  .navbar-nav form {
+    margin: 10px 0;
+    width: 80%;
+    text-align: center;
+  }
+
+  .navbar-nav form {
+    flex-direction: column;
+  }
+
+  .navbar-nav input[type="search"] {
+    width: 100%;
+    height: 3rem;
+    margin-bottom: 10px;
+  }
+
+  .navbar-toggler {
+    z-index: 1100;
+  }
+
+  body.offcanvas-active {
+    overflow: hidden;
+  }
 }
 
-.f-info-links a:hover {
-  text-decoration: underline;
-}
 
-.footer-info {
-  text-align: center;
-  display: flex;
-  height: auto;
-  min-height: 8rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-}
-
-.f-info-social, .f-info-links, .name {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 0.5rem 0;
-}
-
-.f-info-social i {
-  margin: 0 0.5rem;
-  font-size: 1.2rem;
-}
 
 /* Cards */
-.listing-card {
+.listing-card{
   margin: 1rem 0;
   overflow: hidden;
   transition: transform 0.3s ease;
@@ -135,7 +151,7 @@ for the navbar animation and some new add
   background: linear-gradient(45deg, #004e92 100% ,#000428 0%);
   color: white;
   margin: 1rem 0;
-  padding: 0.5rem 1.5rem;
+  padding: 0.7rem 1.5rem;
   border: none;
   border-radius: 0.5rem;
   text-decoration: none;
@@ -253,7 +269,7 @@ for the navbar animation and some new add
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-/* Filters */
+
 #filters {
   display: flex;
   flex-wrap: wrap;
@@ -287,7 +303,6 @@ for the navbar animation and some new add
   color: black !important;
 }
 
-/* Toggler */
 .text-toggle {
   display: flex;
   justify-content: center;
@@ -301,7 +316,6 @@ for the navbar animation and some new add
   padding: 0 1rem;
 }
 
-/* Search Bar */
 .btn-search {
   background: linear-gradient(45deg, #004e92 100% ,#000428 0%);
   color: white !important;
@@ -326,7 +340,6 @@ for the navbar animation and some new add
   width: 100%;
 }
 
-/* Responsive Grid for Listings */
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -394,7 +407,7 @@ for the navbar animation and some new add
   }
 }
 
-/* //for user Profile */
+
 
 
 
@@ -629,3 +642,188 @@ for the navbar animation and some new add
   transition: all 0.2s ease;
   margin-bottom: 16px;
 }
+
+
+
+/* //MORE PAGES// */
+
+:root {
+      --primary-color: #4a6fa5;
+      --primary-hover: #3a5a8a;
+      --text-color: #333;
+      --light-gray: #f5f7fa;
+      --medium-gray: #e1e5eb;
+      --dark-gray: #6c757d;
+      --transition: all 0.3s ease;
+    }
+  
+    .container_faq{
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    .search-container {
+      margin-bottom: 30px;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 12px 20px;
+      border: 1px solid var(--medium-gray);
+      border-radius: 8px;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+    
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+    }
+    
+    .faq-section {
+      margin-bottom: 40px;
+    }
+    
+    .faq-section h2 {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      font-size: 22px;
+      font-weight: 600;
+    }
+    
+    .faq-item {
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      border: 1px solid var(--medium-gray);
+      transition: var(--transition);
+    }
+    
+    .faq-item:hover {
+      border-color: var(--primary-color);
+    }
+    
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 24px;
+      background: white;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 17px;
+      transition: var(--transition);
+    }
+    
+    .faq-question:hover {
+      background: var(--light-gray);
+    }
+    
+    .faq-question::after {
+      content: '+';
+      font-size: 24px;
+      color: var(--primary-color);
+      transition: var(--transition);
+    }
+    
+    .faq-item.active .faq-question::after {
+      content: '-';
+    }
+    
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out;
+      padding: 0 24px;
+      background: var(--light-gray);
+    }
+    
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      padding: 20px 24px;
+    }
+    
+    .contact-support {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 1px solid var(--medium-gray);
+    }
+    
+    .contact-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .contact-btn:hover {
+      background: var(--primary-hover);
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px;
+        margin: 20px;
+      }
+      
+      .faq-question {
+        padding: 15px 20px;
+        font-size: 16px;
+      }
+    }
+
+
+    .hero-clean {
+    background: linear-gradient(to right, #f8fafc, #e2e8f0);
+    padding: 100px 20px;
+    min-height: 80vh;
+    color: #1e293b;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .hero-text {
+    font-size: 1.15rem;
+    color: #475569;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-text {
+      font-size: 1.05rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: 1.6rem;
+    }
+
+    .hero-text {
+      font-size: 1rem;
+    }
+  }
