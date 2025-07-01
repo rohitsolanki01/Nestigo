@@ -122,31 +122,4 @@
 
         // for faq quetion toggling
 
-            document.addEventListener('DOMContentLoaded', () => {
-      const faqItems = document.querySelectorAll('.faq-item');
-      const searchInput = document.querySelector('.search-input');
-
-      faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        question.addEventListener('click', () => {
-          faqItems.forEach(i => i !== item && i.classList.remove('active'));
-          item.classList.toggle('active');
-        });
-      });
-
-      searchInput.addEventListener('input', function () {
-        const term = this.value.toLowerCase();
-        faqItems.forEach(item => {
-          const q = item.querySelector('.faq-question').textContent.toLowerCase();
-          const a = item.querySelector('.faq-answer').textContent.toLowerCase();
-          item.style.display = q.includes(term) || a.includes(term) ? 'block' : 'none';
-        });
-      });
-
-      document.querySelectorAll('.suggestions span').forEach(tag => {
-        tag.addEventListener('click', () => {
-          searchInput.value = tag.textContent;
-          searchInput.dispatchEvent(new Event('input'));
-        });
-      });
-    });
+       
