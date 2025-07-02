@@ -65,10 +65,13 @@ app.engine("ejs", ejsMate);
 
 async function main() {
   mongoose.connect(db_Url, {
-    serverSelectionTimeoutMS: 5000, 
-  tls: true,
-  tlsAllowInvalidCertificates: false, 
-  tlsCertificateKeyFile: null, 
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000,
+    connectTimeoutMS: 10000,
+    socketTimeoutMS: 45000,
+    tls: true,
+    tlsAllowInvalidCertificates: false,
   });
   
 }
