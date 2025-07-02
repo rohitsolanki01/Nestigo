@@ -65,8 +65,6 @@ app.engine("ejs", ejsMate);
 
 async function main() {
   mongoose.connect(db_Url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     serverSelectionTimeoutMS: 5000,
     connectTimeoutMS: 10000,
     socketTimeoutMS: 45000,
