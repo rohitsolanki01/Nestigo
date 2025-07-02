@@ -1,35 +1,40 @@
 <% layout("/layouts/boilerplate") %>
+<div class="container-fluid px-3 px-md-5">
+
   <div class="row mt-3">
-    <div class="col-8 offset-3">
-  <h3 class="mb-3"><%= listing.title %></h3>
-  </div>
-  <div class="card col-6 offset-3 listing-card">
-    <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing image">
-    <div class="card-body">
-      <p class="card-text">own by: <b><%= listing.owner.username %> </b></p>
-      <p class="card-text"> <%= listing.description  %> <br> </p>
-      <p class="card-text">&#8377;<%= listing.price ? listing.price.toLocaleString('en-IN') : 'N/A' %> / night <br></p>
-      <p class="card-text"> <%= listing.location  %> <br></p>
-      <p class="card-text">  <%= listing.country %></p>
+    <div class="col-12 col-md-8 offset-md-2">
+      <h3 class="fs-4 fs-md-3 mb-3"><%= listing.title %></h3>
     </div>
-  </div>
-  <% if(currentUser && listing.owner._id.equals(currentUser._id) ) {%>
-  <div class="btns">
-    <a href="/listings/<%=listing._id %>/edit">edit</a>
-    <br>
-    <form method="post"  action="/listings/<%= listing._id %>?_method=DELETE" >
-      <button>delete</button>
-    </form>
-  <% } %>
-  <% if (!currentUser || !listing.owner._id.equals(currentUser._id)) { %>
-    <form method="get" action="/booking/<%= listing._id %>">
-      <button class="button  offset-3">Book Now</button>
-    </form>
-  <% } %>
 
-</div>
+    <div class="card col-12 col-md-6 offset-md-3 listing-card mb-4">
+      <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing image">
+      <div class="card-body">
+        <p class="card-text">Owned by: <b><%= listing.owner.username %></b></p>
+        <p class="card-text"><%= listing.description %></p>
+        <p class="card-text">&#8377;<%= listing.price ? listing.price.toLocaleString('en-IN') : 'N/A' %> / night</p>
+        <p class="card-text"><%= listing.location %></p>
+        <p class="card-text"><%= listing.country %></p>
+      </div>
+    </div>
 
-  <div class="col-6 offset-3 mt-3 mb-2">
+    <% if(currentUser && listing.owner._id.equals(currentUser._id)) { %>
+      <div class="col-12 col-md-6 offset-md-3 d-flex flex-column gap-2 mb-4">
+        <a href="/listings/<%=listing._id %>/edit" class="btn button w-50">Edit</a>
+        <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
+          <button class="btn button w-50">Delete</button>
+        </form>
+      </div>
+    <% } %>
+
+    <% if (!currentUser || !listing.owner._id.equals(currentUser._id)) { %>
+      <div class="col-12 col-md-6 offset-md-3">
+        <form method="get" action="/booking/<%= listing._id %>">
+          <button class="btn btn-primary w-100 my-2">Book Now</button>
+        </form>
+      </div>
+    <% } %>
+
+<div class="col-12 col-md-6 offset-md-3 mt-3 mb-4">
     <% if(currentUser) {%>
     <h4>Leave a Review</h4>
     <hr>
@@ -96,19 +101,19 @@
       <% } %>
     </div>
     <% } %>
-    <div class="col-6 mt-3" >
-      <h3>Where you’ll be</h3>
-      <div id="map" class="map-container"></div>
-        <div class="map-controls">
-          <p><%= listing.location %></p>
-        </div>
-    </div>
-  
-    </div>
-  </div>
 
+    <div class="map-section-wrapper mt-4 mb-3">
+      <h3 class="fw-bold text-left mb-3">Where you’ll be</h3>
+      <div class="map-container">
+        <div id="map"></div>
+      </div>
+      <p class="text-left text-muted mt-2"><%= listing.location %></p>
+    </div>
+       
+  </div>
 </div>
 
+<!-- Leaflet and Map Script -->
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha512-Dqm3h1Y4qiHUjbhxTuBGQsza0Tfppn53SHlu/uj1f+RT+xfShfe7r6czRf5r2NmllO2aKx+tYJgoxboOkn1Scg==" crossorigin=""></script>
 
 <script>
@@ -123,17 +128,14 @@
     className: "hotel-icon"
   });
 
-  // Initialize map once
   function initMap(lat = 20, lon = 78, zoom = 5) {
     map = L.map("map", { zoomControl: false }).setView([lat, lon], zoom);
-
     L.tileLayer(`https://maps.geoapify.com/v1/tile/osm-carto/{z}/{x}/{y}.png?apiKey=${apiKey}`, {
       attribution: '&copy; <a href="https://www.geoapify.com/">Geoapify</a>',
       maxZoom: 20
     }).addTo(map);
   }
 
-  // Create or update marker
   function updateMarker(lat, lon, label = "Location") {
     if (marker) {
       marker.setLatLng([lat, lon]);
@@ -148,7 +150,6 @@
     marker.bindPopup(`<b>${label}</b>`).openPopup();
   }
 
-  // Geocode location string into lat/lon
   function geocodeAndRender(location) {
     fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(location)}&apiKey=${apiKey}`)
       .then(res => res.json())
@@ -163,7 +164,6 @@
       .catch(err => console.error("Geocode Error:", err));
   }
 
-  // Reverse geocode lat/lon into address
   function reverseGeocode(lat, lon) {
     fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=${apiKey}`)
       .then(res => res.json())
@@ -177,7 +177,6 @@
       .catch(err => console.error("Reverse Geocode Error:", err));
   }
 
-  // Use browser geolocation
   function locateUser() {
     if (!navigator.geolocation) {
       alert("Geolocation not supported.");
@@ -193,12 +192,9 @@
     );
   }
 
-  // When DOM fully loaded
   document.addEventListener("DOMContentLoaded", () => {
     const location = "<%= listing.location %>";
-
-    initMap(); // Always initialize map
-
+    initMap();
     if (location) {
       geocodeAndRender(location);
     }
@@ -218,3 +214,4 @@
     }
   });
 </script>
+
