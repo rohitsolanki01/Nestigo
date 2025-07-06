@@ -4,7 +4,7 @@ const Listing = require("./models/listing");
 const {  reviewSchema } = require('./schema.js');
 const { model } = require('mongoose');
 const Review = require("./models/review.js");
-
+const {bookingSchema} = require("./schema.js")
 
 
 module.exports.isLoggedIn = (req,res,next) => {
@@ -81,3 +81,13 @@ module.exports.isReviewAuthor = async (req, res, next) => {
 
   next();
 };
+
+module.exports.validateBoooking = async (req,res,next) => {
+  const { error } = bookingSchema.validate(req.body);
+  if (error) {
+    let errMess = error.details.map((el) => el.message).join(",");
+    throw new expressError(400, errMess);
+  } else {
+    next();
+  }
+}

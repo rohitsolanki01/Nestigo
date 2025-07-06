@@ -119,7 +119,51 @@
             }
         });
 
+// for booking card js for the one day gap on single bookings
 
-        // for faq quetion toggling
+document.addEventListener('DOMContentLoaded', function () {
+    const checkIn = document.getElementById('checkIn');
+    const checkOut = document.getElementById('checkOut');
+    const nightsCount = document.getElementById('nights-count');
+    const totalPrice = document.getElementById('totalPrice');
+    const checkoutError = document.getElementById("checkout-error");
+    const pricePerNight = `<%= listing.price %>`
 
-       
+    function calculateNights() {
+      const checkInDate = new Date(checkIn.value);
+      const checkOutDate = new Date(checkOut.value);
+
+      if (checkOutDate <= checkInDate) {
+        checkoutError.style.display = 'block';
+        nightsCount.textContent = '0';
+        return;
+      } else {
+        checkoutError.style.display = 'none';
+      }
+
+      const diffTime = checkOutDate - checkInDate;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      nightsCount.textContent = diffDays;
+      totalPrice.value = pricePerNight * diffDays;
+
+      document.querySelector('.price').textContent = Math.floor(pricePerNight * diffDays);
+    }
+
+    checkIn.addEventListener('change', function () {
+      const nextDay = new Date(this.value);
+      nextDay.setDate(nextDay.getDate() + 1);
+      checkOut.min = nextDay.toISOString().split('T')[0];
+
+      if (new Date(checkOut.value) <= new Date(this.value)) {
+        checkOut.value = nextDay.toISOString().split('T')[0];
+      }
+      calculateNights();
+    });
+
+    checkOut.addEventListener('change', calculateNights);
+    document.getElementById('adults').addEventListener('change', calculateNights);
+    document.getElementById('children').addEventListener('change', calculateNights);
+
+    calculateNights();
+  });
