@@ -1,84 +1,112 @@
 <% layout("/layouts/boilerplate") %>
+<section class="booking-container ">
+  <div class="booking-card mt-4">
+    <h3 class="mt-2">Book Your Stay at <span><%= listing.title %></span> </h3>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<div class="booking-container">
-  <div class="booking-card">
-    <div class="price-section">
-      <div class="price"><%= Math.floor(listing.price) %></div>
-      <div class="duration">for <span id="nights-count">1</span> nights</div>
+    <div class="image-wrapper">
+      <img src="<%= listing.image.url %>" alt="Listing Image" />
     </div>
 
-    <form method="POST" action="/listings/<%= listing._id %>/booking">
-      <div class="form-section">
-        <h2 class="form-title">Book Your Stay</h2>
-
-        <div class="date-time-grid">
-          <div class="input-group">
-            <label for="checkIn" class="input-label"><i class="fa-regular fa-calendar-days"></i> CHECK-IN</label>
-            <input 
-              type="date" 
-              class="input-field" 
-              id="checkIn" 
-              name="checkIn" 
-              required
-              min="<%= new Date().toISOString().split('T')[0] %>"
-              value="<%= new Date().toISOString().split('T')[0] %>"
-            >
-          </div>
-          <div class="input-group">
-            <label for="checkOut" class="input-label"><i class="fa-regular fa-calendar-days"></i> CHECKOUT</label>
-            <input 
-              type="date" 
-              class="input-field" 
-              id="checkOut" 
-              name="checkOut" 
-              required
-              min="<%= new Date(Date.now() + 86400000).toISOString().split('T')[0] %>"
-              value="<%= new Date(Date.now() + 86400000).toISOString().split('T')[0] %>"
-            >
-            <span class="error-message" id="checkout-error">
-              Check-Out must be after Check-In
-            </span>
-          </div>
+    <form action="/book/<%= listing._id %>" method="POST">
+      <!-- Dates -->
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>Check-In Date</label>
+          <input type="date" name="checkIn" required />
         </div>
-
-        <h3 class="section-title">Guests</h3>
-        <div class="guests-grid">
-          <div class="input-group">
-            <label for="adults" class="input-label"><i class="fa-solid fa-user"></i> ADULTS</label>
-            <input 
-              type="number" 
-              class="input-field" 
-              id="adults" 
-              name="guests[adults]" 
-              min="1" 
-              value="1" 
-              required
-            >
-          </div>
-          <div class="input-group">
-            <label for="children" class="input-label"><i class="fa-solid fa-child"></i> CHILDREN</label>
-            <input 
-              type="number" 
-              class="input-field" 
-              id="children" 
-              name="guests[children]" 
-              min="0" 
-              value="0" 
-              required
-            >
-          </div>
+        <div class="form-group">
+          <label>Check-Out Date</label>
+          <input type="date" name="checkOut" required />
         </div>
-
-        <input type="hidden" name="paymentStatus" value="pending">
-        <input type="hidden" name="totalPrice" id="totalPrice" value="<%= listing.price %>">
-
-        <button type="submit" class="reserve-button">Reserve Now</button>
-        <p class="disclaimer">You won't be charged yet</p>
       </div>
+
+      <!-- Guests -->
+      <div class="form-grid-3">
+        <div class="form-group">
+          <label>Adults</label>
+          <input type="number" name="guests[adults]" min="1" required />
+        </div>
+        <div class="form-group">
+          <label>Children</label>
+          <input type="number" name="guests[children]" min="0" />
+        </div>
+        <div class="form-group">
+          <label>Infants</label>
+          <input type="number" name="guests[infants]" min="0" />
+        </div>
+      </div>
+
+      <!-- Room Type -->
+      <div class="form-group">
+        <label>Room Type</label>
+        <select name="roomType">
+          <option value="standard">Standard</option>
+          <option value="deluxe">Deluxe</option>
+          <option value="suite">Suite</option>
+        </select>
+      </div>
+
+      <!-- Special Requests -->
+      <div class="form-group">
+        <label>Special Requests</label>
+        <textarea name="specialRequests" placeholder="e.g., Need early check-in..."></textarea>
+      </div>
+
+      <!-- Total Price -->
+      <div class="form-group">
+        <label><%= listing.Price %></label>
+        <input type="number" name="totalPrice" readonly required />
+      </div>
+
+      <button type="submit" class="booking_btn">Book Now</button>
     </form>
   </div>
-</div>
+</section>
 
+<script>
+  const checkInInput = document.querySelector('input[name="checkIn"]');
+  const checkOutInput = document.querySelector('input[name="checkOut"]');
+  const roomTypeSelect = document.querySelector('select[name="roomType"]');
+  const totalPriceInput = document.querySelector('input[name="totalPrice"]');
+  const adultsInput = document.querySelector('input[name="guests[adults]"]');
+  const childrenInput = document.querySelector('input[name="guests[children]"]');
 
+  const roomPrices = {
+    standard: 1500,
+    deluxe: 2500,
+    suite: 4000,
+  };
+
+  function calculateTotalPrice() {
+    const checkIn = new Date(checkInInput.value);
+    const checkOut = new Date(checkOutInput.value);
+    const roomType = roomTypeSelect.value;
+    const adults = parseInt(adultsInput.value) || 0;
+    const children = parseInt(childrenInput.value) || 0;
+    const totalGuests = adults + children;
+
+    if (isNaN(checkIn) || isNaN(checkOut) || checkOut <= checkIn || totalGuests < 1) {
+      totalPriceInput.value = "";
+      return;
+    }
+
+    const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+    let basePrice = nights * (roomPrices[roomType] || 0);
+
+    // Add cost per guest beyond 2 guests
+    if (totalGuests > 2) {
+      const extraGuests = totalGuests - 2;
+      basePrice += extraGuests * 500 * nights;
+    }
+
+    // Add 18% GST
+    const gstAmount = basePrice * 0.18;
+    const total = basePrice + gstAmount;
+
+    totalPriceInput.value = Math.round(total);
+  }
+
+  [checkInInput, checkOutInput, roomTypeSelect, adultsInput, childrenInput].forEach(input => {
+    input.addEventListener("change", calculateTotalPrice);
+  });
+</script>

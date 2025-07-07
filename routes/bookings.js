@@ -1,27 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const wrapAsync = require("../utills/wrapAsyc.js");
-const { isLoggedIn } = require("../middleware.js");
-const bookingController = require("../controller/booking.js");
-const { validateBoooking } = require("../middleware.js");
+const bookingController = require("../controller/booking");
+const { isLoggedIn } = require("../middleware");
 
-router.get(
-  "/booking/:listingId",
-  isLoggedIn,
-  wrapAsync(bookingController.findListAndRenderFormForBokking)
-);
 
-router.post(
-  "/listings/:id/booking",
-  isLoggedIn,
-  validateBoooking,
-  wrapAsync(bookingController.handelPostDataOfBooking)
-);
+router.get("/booking/:listingId", isLoggedIn, bookingController.findListAndRenderFormForBooking);
 
-router.delete(
-  "/bookings/:id",
-  isLoggedIn,
-  wrapAsync(bookingController.cencelBookingOfUser)
-);
+// Create booking
+router.post("/book/:id", isLoggedIn, bookingController.createBooking);
+
+// Get current user's bookings
+router.get("/my-bookings", isLoggedIn, bookingController.getUserBookings);
+
+// Get one booking
+router.get("/booking/:id", isLoggedIn, bookingController.getBookingById);
+
+// Cancel a booking
+router.delete("/booking/:id", bookingController.deleteBooking);
 
 module.exports = router;

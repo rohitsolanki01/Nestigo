@@ -1,95 +1,119 @@
-const Booking = require("../models/booking.js");
-const Listing = require("../models/listing.js");
+const Booking = require("../models/booking");
+const Listing = require("../models/listing");
 const mongoose = require("mongoose");
 
-module.exports.findListAndRenderFormForBokking = async (req,res) => {
-    if(!req.isAuthenticated()) {
-        req.flash("error", "You must be logged in to book a listing");
-        return res.redirect("/login");
+
+
+
+module.exports.findListAndRenderFormForBooking = async (req, res) => {
+  try {
+    const { listingId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(listingId)) {
+      req.flash("error", "Invalid listing ID");
+      return res.redirect("/listings");
     }
-    try {
-        let { listingId } = req.params;
-        if(!listingId || !mongoose.Types.ObjectId.isValid(listingId)) {
-            req.flash("error", "Valid listing ID is required");
-            return res.redirect("/listings");
-        }
-        let listing = await Listing.findById(listingId);
-        if(!listing) {
-            req.flash("error", "Listing not found");
-            return res.redirect("/listings");
-        }
-        res.render("booking/booking.ejs", {listing});
-    } catch(err) {
-        console.error("Error finding listing:", err);
-        req.flash("error", "Error loading booking page");
-        res.redirect("/listings");
+
+    const listing = await Listing.findById(listingId);
+    if (!listing) {
+      req.flash("error", "Listing not found");
+      return res.redirect("/listings");
     }
-}
 
-module.exports.handelPostDataOfBooking = async (req,res) => {
-    try {
-        const listingId = req.params.id;
-        if(!listingId || !mongoose.Types.ObjectId.isValid(listingId)) {
-            req.flash("error", "Valid listing ID is required");
-            return res.redirect("/listings");
-        }
-        
-        const guestId = req.user._id;
-        const { checkIn, checkOut, guests, totalPrice , paymentStatus } = req.body;
+    res.render("booking/booking.ejs", { listing });
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Server error loading booking form");
+    res.redirect("/listings");
+  }
+};
 
-        const newBooking = new Booking({
-            listingId,
-            guestId,
-            checkIn,
-            checkOut,
-            guests,
-            totalPrice,
-            paymentStatus: "pending",
-        });
 
-        await newBooking.save();
-        req.flash("success", "Booking successfully created");
-        res.redirect(`/listings/${listingId}`);
-    } catch (err) {
-        console.error("Booking creation error:", err);
-        const errorMessage = err.name === 'CastError' 
-            ? "Invalid ID format" 
-            : err.message;
-        req.flash("error", `Booking failed: ${errorMessage}`);
-        res.redirect(`/listings/${req.params.id || ''}`);
+module.exports.createBooking = async (req, res) => {
+  try {
+    const { id } = req.params; // listingId
+    const guestId = req.user._id;
+    const { checkIn, checkOut, guests, roomType, totalPrice, specialRequests } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid listing ID" });
     }
-}
 
-module.exports.cencelBookingOfUser = async (req,res) => {
-    try {
-        const { id } = req.params;
-        
-        if(!id || !mongoose.Types.ObjectId.isValid(id)) {
-            req.flash("error", "Invalid booking ID format");
-            return res.redirect("/user/bookings");
-        }
+    const checkInDate = new Date(checkIn);
+    const checkOutDate = new Date(checkOut);
+    const totalNights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
 
-        const booking = await Booking.findById(id);
-        if (!booking) {
-            req.flash("error", "Booking not found");
-            return res.redirect("/user/bookings");
-        }
+    const booking = new Booking({
+      listingId: id,
+      guestId,
+      checkIn: checkInDate,
+      checkOut: checkOutDate,
+      guests,
+      roomType,
+      totalNights,
+      totalPrice,
+      paymentStatus: "pending",
+      specialRequests,
+    });
 
-        if (!booking.guestId.equals(req.user._id)) {
-            req.flash("error", "You can only cancel your own bookings");
-            return res.redirect("/user/bookings");
-        }
+    await booking.save();
+    req.flash("success" , "Booking Successfully Created")
+    res.redirect("/listings")
+    
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
-        await Booking.findByIdAndDelete(id);
-        
-        req.flash("success", "Booking cancelled successfully");
-        res.redirect("/user/:id/booking");
-    } catch (error) {
-        console.error("Booking cancellation error:", error);
-        const errorMessage = error.name === 'CastError' 
-            ? "Invalid booking ID format" 
-            : error.message;
-        req.flash("error", `Failed to cancel booking: ${errorMessage}`);
-        res.redirect("/user/bookings");
+module.exports.getUserBookings = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const bookings = await Booking.find({ guestId: userId }).populate("listingId");
+    res.json(bookings);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch bookings" });
+  }
+};
+
+module.exports.getBookingById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const booking = await Booking.findById(id).populate("listingId");
+    if (!booking) return res.status(404).json({ error: "Booking not found" });
+    res.json(booking);
+  } catch (err) {
+    res.status(500).json({ error: "Error retrieving booking" });
+  }
+};
+
+module.exports.deleteBooking = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      req.flash("error", "Invalid booking ID");
+      return res.redirect("/user/bookings");
     }
-}
+
+    const booking = await Booking.findById(id);
+
+    if (!booking) {
+      req.flash("error", "Booking not found");
+      return res.redirect("/user/bookings");
+    }
+
+    if (!booking.guestId.equals(req.user._id)) {
+      req.flash("error", "Unauthorized: Not your booking");
+      return res.redirect("/user/bookings");
+    }
+
+    await Booking.findByIdAndDelete(id);
+
+    req.flash("success", "Booking Successfully delete");
+    return    res.redirect("/user/:id/booking");
+  } catch (error) {
+    console.error("Booking delete error:", error);
+    req.flash("error", "Something went wrong while deleting");
+    return res.redirect("/user/bookings");
+  }
+};

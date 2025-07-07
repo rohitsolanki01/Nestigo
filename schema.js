@@ -35,42 +35,18 @@ const reviewSchema = Joi.object({
 });
 
 const bookingSchema = Joi.object({
-  listingId: Joi.string()
-    .custom((value, helpers) => {
-      if (!mongoose.Types.ObjectId.isValid(value)) {
-        return helpers.error("any.invalid");
-      }
-      return value;
-    })
-    .messages({ "any.invalid": "Invalid listing ID" }),
-
-  guestId: Joi.string()
-    .custom((value, helpers) => {
-      if (!mongoose.Types.ObjectId.isValid(value)) {
-        return helpers.error("any.invalid");
-      }
-      return value;
-    })
-    .messages({ "any.invalid": "Invalid guest ID" }),
-
-  checkIn: Joi.date().required().label("Check-In Date"),
-  checkOut: Joi.date()
-    .greater(Joi.ref("checkIn"))
-    .required()
-    .label("Check-Out Date")
-    .messages({ "date.greater": "Check-Out must be after Check-In" }),
-
-  totalPrice: Joi.number().min(0).label("Total Price"),
-
+  checkIn: Joi.date().required(),
+  checkOut: Joi.date().required(),
+  roomType: Joi.string().valid("standard", "deluxe", "suite").default("standard"),
   guests: Joi.object({
-    adults: Joi.number().integer().min(1).required().label("Adult Guests"),
-    children: Joi.number().integer().min(0).required().label("Children Guests"),
+    adults: Joi.number().min(1).required(),
+    children: Joi.number().min(0).default(0),
+    infants: Joi.number().min(0).default(0),
   }),
-
-  paymentStatus: Joi.string()
-    .valid("pending", "paid", "failed")
-    .default("pending"),
+  totalPrice: Joi.number().min(0).required(),
+  specialRequests: Joi.string().allow("").optional(),
 });
+
 
 // ✅ Proper export of both schemas
 module.exports = { listingSchema, reviewSchema,bookingSchema};
