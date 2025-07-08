@@ -1020,3 +1020,20 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
 }
+
+.cencel_booking {
+  display: block;
+  width: 50%;
+  background: linear-gradient(to right, #ec4899, #d946ef);
+  color: white;
+  padding: 0.7rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cencel_booking:hover{
+  background: linear-gradient(to right, #db2777, #c026d3);
+}
