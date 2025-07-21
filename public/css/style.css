@@ -949,7 +949,7 @@ footer */
 }
 
 .booking-card h2,span{
- background: linear-gradient(to right, #CB60B3 0%, #C146A1 50%, #A80077 51%, #DB36A4 100%);
+  background-image: linear-gradient(45deg, #004e92 100% ,#000428 0%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
