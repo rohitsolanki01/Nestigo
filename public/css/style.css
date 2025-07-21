@@ -1,4 +1,9 @@
 /* Base Styles */
+*{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
 body {
   font-family: "Rubik" !important;
   display: flex;
@@ -40,6 +45,7 @@ body {
   border: none;
   padding: 0.5rem;
 }
+
 @media (max-width: 767.98px) {
   #navbarNavAltMarkup {
     position: fixed;
@@ -86,6 +92,12 @@ body {
 
   .navbar-toggler {
     z-index: 1100;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%280, 0, 0, 0.5%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    border: none;
+    padding: 0.5rem;
   }
 
   body.offcanvas-active {
@@ -985,23 +997,37 @@ textarea:focus {
   box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.2);
 }
 
-.booking_btn{
-  display: block;
-  width: 100%;
-  background: linear-gradient(to right, #ec4899, #d946ef);
-  color: white;
-  padding: 1rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 0.75rem;
+.buttons {
+  margin: 10%;
+  text-align: center;
+}
+
+.btn-hover {
+  width: 90%;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
   cursor: pointer;
-  transition: background 0.3s ease;
+  margin: 20px;
+  height: 55px;
+  text-align:center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  transition: all .4s ease-in-out;
 }
 
-.booking_btn:hover {
-  background: linear-gradient(to right, #db2777, #c026d3);
+.btn-hover:hover {
+  background-position: 100% 0;
 }
 
+.btn-hover:focus {
+  outline: none;
+}
+.btn-hover.color-9 {
+  background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+  box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
 .form-grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1024,7 +1050,7 @@ textarea:focus {
 .cencel_booking {
   display: block;
   width: 50%;
-  background: linear-gradient(to right, #ec4899, #d946ef);
+  background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
   color: white;
   padding: 0.7rem;
   font-weight: 700;
@@ -1035,5 +1061,6 @@ textarea:focus {
 }
 
 .cencel_booking:hover{
-  background: linear-gradient(to right, #db2777, #c026d3);
+  background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+  box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
 }
