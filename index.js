@@ -98,14 +98,15 @@ app.use((req,res,next) => {
 });
 
 
+
+
 app.get("/", async (req, res) => {
   try {
-      const allListings = await Listing.find({}); 
-      
-      res.render("listings/index.ejs", { allListings });
-  } catch (error) {
-      console.error("Error fetching listings:", error);
-      res.status(500).render("error", { message: "Unable to load listings" });
+    const listings = await Listing.find().limit(3); // Optional: Limit to 3 for preview
+    res.render('listings/landingPage', { listings });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
   }
 });
 
