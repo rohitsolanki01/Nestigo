@@ -744,19 +744,7 @@ footer */
   animation: scroll 20s linear infinite;
 }
 
-.trust-badge {
-  height: 30px !important;
-  object-fit: contain !important;
-  filter: grayscale(100%) !important;
-  opacity: 0.7 !important;
-  transition: all 0.3s ease !important;
-}
 
-.trust-badge:hover {
-  filter: grayscale(0);
-  opacity: 1;
-  transform: scale(1.1);
-}
 
 @keyframes scroll {
   0% { transform: translateX(0); }
