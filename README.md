@@ -1,4 +1,4 @@
-[![GitHub Trends SVG](https://api.githubtrends.io/user/svg/avgupta456/langs)](https://githubtrends.io)
+[![GitHub Trends SVG](https://api.githubtrends.io/user/svg/rohitsolanki01/langs)](https://githubtrends.io)
 # Nestigo 🏠✈️
 
 **Making travel easy and enjoyable**
