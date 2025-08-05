@@ -1,8 +1,7 @@
 const Booking = require("../models/booking");
 const Listing = require("../models/listing");
 const mongoose = require("mongoose");
-
-
+const bookingSchema = require("../schema");
 
 
 module.exports.findListAndRenderFormForBooking = async (req, res) => {
@@ -30,7 +29,7 @@ module.exports.findListAndRenderFormForBooking = async (req, res) => {
 
 module.exports.createBooking = async (req, res) => {
   try {
-    const { id } = req.params; // listingId
+    const { id } = req.params; 
     const guestId = req.user._id;
     const { checkIn, checkOut, guests, roomType, totalPrice, specialRequests } = req.body;
 

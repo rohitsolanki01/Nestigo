@@ -4,7 +4,7 @@ const bookingController = require("../controller/booking");
 const { isLoggedIn } = require("../middleware");
 
 
-router.get("/booking/:listingId", isLoggedIn, bookingController.findListAndRenderFormForBooking);
+router.get("/booking/:listingId",isLoggedIn, bookingController.findListAndRenderFormForBooking);
 
 // Create booking
 router.post("/book/:id", isLoggedIn, bookingController.createBooking);
@@ -16,6 +16,6 @@ router.get("/my-bookings", isLoggedIn, bookingController.getUserBookings);
 router.get("/booking/:id", isLoggedIn, bookingController.getBookingById);
 
 // Cancel a booking
-router.delete("/booking/:id", bookingController.deleteBooking);
+router.delete("/booking/:id", isLoggedIn, bookingController.deleteBooking);
 
 module.exports = router;

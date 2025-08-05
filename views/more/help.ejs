@@ -1,6 +1,177 @@
 <% layout("/layouts/boilerplate") %>
+<style>
+  
 
+.container_faq {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  color: #333;
+}
 
+.container_faq h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.subtext {
+  font-size: 1.1rem;
+  color: #4a5568;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.search-container {
+  margin: 2rem auto 3rem;
+  max-width: 600px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 50px;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 2px 8px rgba(66, 153, 225, 0.2);
+}
+
+.faq-section {
+  margin-bottom: 3rem;
+}
+
+.faq-section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.faq-item {
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.faq-question {
+  padding: 1.25rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #2d3748;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8fafc;
+  transition: background-color 0.2s ease;
+}
+
+.faq-question:hover {
+  background-color: #edf2f7;
+}
+
+.faq-question::after {
+  content: '+';
+  font-size: 1.5rem;
+  color: #718096;
+  transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-question::after {
+  content: '-';
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background-color: white;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 500px;
+}
+
+.faq-answer p {
+  padding: 1.5rem;
+  margin: 0;
+  line-height: 1.6;
+  color: #4a5568;
+  border-top: 1px solid #edf2f7;
+}
+
+.contact-support {
+  text-align: center;
+  margin-top: 4rem;
+  padding: 2rem;
+  background-color: #f8fafc;
+  border-radius: 8px;
+}
+
+.contact-support p {
+  font-size: 1.1rem;
+  color: #4a5568;
+  margin-bottom: 1.5rem;
+}
+
+.contact-btn {
+  background-color: #4299e1;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.contact-btn:hover {
+  background-color: #3182ce;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container_faq {
+    padding: 1.5rem 1rem;
+  }
+  
+  .container_faq h1 {
+    font-size: 2rem;
+  }
+  
+  .subtext {
+    font-size: 1rem;
+  }
+  
+  .faq-question {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  
+  .faq-answer p {
+    padding: 1rem;
+  }
+}
+</style>
   <div class="container_faq">
     <h1>Help Center</h1>
     <p class="subtext">We're here to help you with everything from booking your stay to resolving account issues.</p>
@@ -66,7 +237,7 @@
 
     <div class="contact-support">
       <p>Need personalized help? Our support team is available 24/7.</p>
-      <a href="/contactUs"><button class="contact-btn">Contact Support</button></a>         
+      <a href="/contactUs"><button class="button">Contact Support</button></a>         
     </div>
   </div>
 
