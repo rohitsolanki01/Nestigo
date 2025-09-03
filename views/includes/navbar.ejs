@@ -1,79 +1,973 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 
-<link
-href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
-rel="stylesheet"
-integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
-crossorigin="anonymous"
-/>
+<style>
+    /* ==============================================
+    NESTIGO PROFESSIONAL NAVIGATION ENHANCEMENT
+    ============================================== */
+
+  /* Root Variables */
+  :root {
+    --nestigo-primary: #FF385C;
+    --nestigo-primary-dark: #E31C5F;
+    --nestigo-secondary: #00A699;
+    --nestigo-dark: #222222;
+    --nestigo-gray-dark: #717171;
+    --nestigo-gray: #B0B0B0;
+    --nestigo-gray-light: #F7F7F7;
+    --nestigo-white: #FFFFFF;
+    --nestigo-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+    --nestigo-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --navbar-height: 80px;
+  }
+
+  /* Reset and Base */
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    padding-top: var(--navbar-height);
+    margin: 0;
+  }
+
+  /* Main Navbar */
+  .professional-navbar {
+    background: var(--nestigo-white);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    box-shadow: var(--nestigo-shadow);
+    transition: var(--nestigo-transition);
+    padding: 0;
+    z-index: 1030;
+    height: var(--navbar-height);
+  }
+
+  .professional-navbar.navbar-scrolled {
+    box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+  }
+
+  .professional-navbar .container-fluid {
+    padding: 1rem 2rem;
+    align-items: center;
+    height: 100%;
+  }
+
+  /* Professional Brand */
+  .professional-brand {
+    text-decoration: none;
+    color: var(--nestigo-primary);
+    transition: var(--nestigo-transition);
+    display: flex;
+    align-items: center;
+  }
+
+  .professional-brand:hover {
+    transform: scale(1.02);
+    color: var(--nestigo-primary-dark);
+  }
+
+  .brand-logo {
+    height: 50px !important;
+    width: auto;
+    transition: var(--nestigo-transition);
+  }
+
+  .professional-brand:hover .brand-logo {
+    transform: rotate(5deg);
+  }
+
+  /* Professional Mobile Toggle */
+  .professional-toggler {
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 4px;
+    padding: 4px 8px;
+    background: transparent;
+    position: relative;
+    width: 40px;
+    height: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .professional-toggler:focus {
+    box-shadow: 0 0 0 2px rgba(255, 56, 92, 0.3);
+    border-color: var(--nestigo-primary);
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: var(--nestigo-dark);
+    margin: 2px 0;
+    transition: var(--nestigo-transition);
+    border-radius: 1px;
+  }
+
+  .professional-toggler[aria-expanded="true"] .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .professional-toggler[aria-expanded="true"] .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .professional-toggler[aria-expanded="true"] .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+  }
+
+  /* Professional Links */
+  .professional-link {
+    color: var(--nestigo-dark) !important;
+    text-decoration: none !important;
+    padding: 0.75rem 1.25rem !important;
+    border-radius: 24px !important;
+    transition: var(--nestigo-transition) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .professional-link:hover {
+    background: var(--nestigo-gray-light) !important;
+    color: var(--nestigo-dark) !important;
+    transform: translateY(-2px) !important;
+  }
+
+  .professional-link i {
+    font-size: 1rem;
+    transition: var(--nestigo-transition);
+  }
+
+  .professional-link:hover i {
+    transform: scale(1.1);
+  }
+
+  /* Professional Search */
+  .navbar-search {
+    flex: 1;
+    max-width: 580px;
+    margin: 0 2rem;
+  }
+
+  .professional-search {
+    width: 100%;
+  }
+
+  .search-wrapper {
+    display: flex;
+    align-items: center;
+    background: var(--nestigo-white);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 40px;
+    padding: 0.25rem;
+    transition: var(--nestigo-transition);
+    box-shadow: var(--nestigo-shadow);
+    position: relative;
+  }
+
+  .search-wrapper:hover {
+    box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+  }
+
+  .search-wrapper:focus-within {
+    border-color: var(--nestigo-primary);
+    box-shadow: 0 0 0 3px rgba(255, 56, 92, 0.1), 0 2px 16px rgba(0,0,0,0.12);
+  }
+
+  .search-icon {
+    color: var(--nestigo-gray-dark);
+    margin-left: 1rem;
+    font-size: 1rem;
+  }
+
+  .search-input {
+    border: none !important;
+    background: transparent !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    flex: 1 !important;
+    color: var(--nestigo-dark) !important;
+  }
+
+  .search-input:focus {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  .search-input::placeholder {
+    color: var(--nestigo-gray) !important;
+    font-weight: 400 !important;
+  }
+
+  .search-btn {
+    background: var(--nestigo-primary) !important;
+    color: var(--nestigo-white) !important;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 48px !important;
+    height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: var(--nestigo-transition) !important;
+    font-size: 1rem !important;
+  }
+
+  .search-btn:hover {
+    background: var(--nestigo-primary-dark) !important;
+    transform: scale(1.05) !important;
+  }
+
+  /* Mobile Search */
+  .mobile-search {
+    margin: 1rem 0;
+    width: 100%;
+  }
+
+  .mobile-search .d-flex {
+    background: var(--nestigo-white);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 40px;
+    padding: 0.5rem;
+    box-shadow: var(--nestigo-shadow);
+  }
+
+  .mobile-search-input {
+    border: none !important;
+    background: transparent !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 1rem !important;
+    color: var(--nestigo-dark) !important;
+    flex: 1 !important;
+  }
+
+  .mobile-search-input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  .mobile-search .btn {
+    background: var(--nestigo-primary) !important;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+    color: var(--nestigo-white) !important;
+  }
+
+  /* Host Link */
+  .host-link {
+    background: transparent !important;
+    color: var(--nestigo-dark) !important;
+    border: 1px solid transparent !important;
+    transition: var(--nestigo-transition) !important;
+  }
+
+  .host-link:hover {
+    background: var(--nestigo-gray-light) !important;
+    color: var(--nestigo-dark) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* Auth Section */
+  .auth-section {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .login-link {
+    color: var(--nestigo-dark) !important;
+    padding: 0.75rem 1rem !important;
+  }
+
+  .signup-btn {
+    background: var(--nestigo-primary) !important;
+    border: none !important;
+    font-weight: 600 !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 24px !important;
+    transition: var(--nestigo-transition) !important;
+    color: var(--nestigo-white) !important;
+  }
+
+  .signup-btn:hover {
+    background: var(--nestigo-primary-dark) !important;
+    transform: translateY(-2px) !important;
+    color: var(--nestigo-white) !important;
+  }
+
+  /* User Dropdown */
+  .user-dropdown {
+    position: relative;
+  }
+
+  .user-menu-toggle {
+    background: var(--nestigo-white) !important;
+    border: 1px solid rgba(0,0,0,0.12) !important;
+    border-radius: 21px !important;
+    padding: 5px 5px 5px 12px !important;
+    color: var(--nestigo-dark) !important;
+    text-decoration: none !important;
+    transition: var(--nestigo-transition) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    min-height: 42px !important;
+  }
+
+  .user-menu-toggle:hover {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.18) !important;
+    color: var(--nestigo-dark) !important;
+  }
+
+  .user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--nestigo-gray-dark);
+    color: var(--nestigo-white);
+    font-size: 1.2rem;
+  }
+
+  .user-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  /* User Dropdown Menu */
+  .user-dropdown-menu {
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12) !important;
+    padding: 0.5rem 0 !important;
+    margin-top: 0.5rem !important;
+    min-width: 240px !important;
+    background: var(--nestigo-white) !important;
+  }
+
+  .dropdown-header {
+    padding: 1rem 1.5rem !important;
+    border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .user-info strong {
+    color: var(--nestigo-dark);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .user-info small {
+    color: var(--nestigo-gray-dark);
+    font-size: 0.8rem;
+  }
+
+  .user-dropdown-menu .dropdown-item {
+    padding: 0.75rem 1.5rem !important;
+    color: var(--nestigo-dark) !important;
+    font-weight: 400 !important;
+    text-decoration: none !important;
+    transition: var(--nestigo-transition) !important;
+    display: flex !important;
+    align-items: center !important;
+    font-size: 0.9rem !important;
+  }
+
+  .user-dropdown-menu .dropdown-item:hover {
+    background: var(--nestigo-gray-light) !important;
+    color: var(--nestigo-dark) !important;
+  }
+
+  .user-dropdown-menu .dropdown-item.text-danger:hover {
+    background: rgba(255, 56, 92, 0.1) !important;
+    color: var(--nestigo-primary) !important;
+  }
+
+  .user-dropdown-menu .dropdown-item i {
+    margin-right: 0.75rem;
+    width: 16px;
+    text-align: center;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1199.98px) {
+    .navbar-search {
+      display: none !important;
+    }
+    
+    .professional-navbar .container-fluid {
+      padding: 1rem 1.5rem;
+    }
+  }
+
+  @media (max-width: 991.98px) {
+    .professional-navbar .container-fluid {
+      padding: 0.75rem 1rem;
+    }
+    
+    .navbar-nav.me-auto {
+      width: 100%;
+      margin: 1rem 0;
+    }
+    
+    .navbar-nav.ms-auto {
+      width: 100%;
+      margin-top: 1rem;
+    }
+    
+    .auth-section {
+      flex-direction: column;
+      width: 100%;
+      gap: 0.75rem;
+    }
+    
+    .signup-btn,
+    .host-link,
+    .user-menu-toggle {
+      width: 100% !important;
+      justify-content: center !important;
+      margin: 0 !important;
+    }
+    
+    .user-dropdown-menu {
+      position: static !important;
+      transform: none !important;
+      width: 100% !important;
+      box-shadow: none !important;
+      border: 1px solid rgba(0,0,0,0.08) !important;
+      margin-top: 1rem !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    :root {
+      --navbar-height: 70px;
+    }
+    
+    .professional-navbar .container-fluid {
+      padding: 0.5rem 1rem;
+    }
+    
+    .brand-logo {
+      height: 28px;
+    }
+    
+    .professional-link {
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 576px) {
+    :root {
+      --navbar-height: 65px;
+    }
+    
+    .professional-navbar .container-fluid {
+      padding: 0.5rem 0.75rem;
+    }
+    
+    .brand-logo {
+      height: 26px;
+    }
+    
+    .user-dropdown-menu {
+      min-width: 200px !important;
+    }
+    
+    .navbar-nav.me-auto {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  /* Animations */
+  @keyframes slideInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .navbar-collapse.show,
+  .navbar-collapse.collapsing {
+    animation: slideInDown 0.3s ease-out;
+  }
+
+  .dropdown-menu.show {
+    animation: fadeInScale 0.2s ease-out;
+  }
+
+  /* Focus States */
+  .professional-link:focus,
+  .search-btn:focus,
+  .user-menu-toggle:focus,
+  .signup-btn:focus,
+  .host-link:focus {
+    outline: 2px solid var(--nestigo-primary) !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Print Styles */
+  @media print {
+    .professional-navbar {
+      display: none !important;
+    }
+    body {
+      padding-top: 0 !important;
+    }
+  }
+
+  /* High Contrast Mode */
+  @media (prefers-contrast: high) {
+    .professional-navbar {
+      border-bottom: 2px solid var(--nestigo-dark);
+    }
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+@media (max-width: 991.98px) {
+
+#navbarNavAltMarkup {
+  padding-block: 0.5rem 0.25rem;  
+}
 
 
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+.mobile-search .d-flex {
+  padding: 0.3rem 0.6rem;       
+  border-radius: 32px;
+  width: 100% !important;
+}
+.mobile-search-input {
+  padding: 0.4rem 0.5rem !important;
+  font-size: 0.9rem !important;
+  margin-left: 1rem !important;
+}
+.mobile-search .btn {
+  width: 34px;
+  height: 34px;
+  font-size: 0.9rem;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+#navbarNavAltMarkup  .professional-link,
+#navbarNavAltMarkup  .host-link,
+#navbarNavAltMarkup  .login-link,
+#navbarNavAltMarkup  .signup-btn,
+#navbarNavAltMarkup  .user-menu-toggle,
+#navbarNavAltMarkup  .mobile-search {
+  margin-block: 0.6rem;            
+}
+}
+
+
+</style>
+
+<nav class="navbar navbar-expand-lg fixed-top professional-navbar" id="mainNavbar">
   <div class="container-fluid">
+    
 
-    <a class="navbar-brand d-flex align-items-center" href="/">
-      <img src="/accets/logo.png" alt="Logo" height="60" class="me-2">
+    <a class="navbar-brand professional-brand" href="/">
+      <img src="/accets/logo.png" alt="Logo" class="brand-logo" >
     </a>
 
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    <button class="navbar-toggler professional-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
     </button>
 
 
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      
 
-      <div class="navbar-nav">
-        <a class="nav-link" href="/listings">
-          <i class="bi bi-globe-americas me-1"></i> Explore
+      <div class="navbar-nav me-auto">
+        <a class="nav-link professional-link" href="/listings">
+          <i class="bi bi-compass me-1"></i>
+          <span>Explore</span>
         </a>
       </div>
 
-         <div class="navbar-nav ms-auto">
+      <div class="navbar-search d-none d-lg-flex">
+        <form class="professional-search" role="search" action="/listings" method="GET">
+          <div class="search-wrapper">
+            <i class="bi bi-search search-icon"></i>
+            <input class="form-control search-input" type="search" name="country" placeholder="Where to next?" value="<%= typeof country !== 'undefined' ? country : '' %>">
+            <button class="btn search-btn" type="submit">
+              <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="navbar-nav ms-auto">
+
+        <div class="d-lg-none mobile-search">
           <form class="d-flex" role="search" action="/listings" method="GET">
-            <input class="form-control me-2 serch-inp" type="search" 
-              name="country" 
-              placeholder="Search by country"
-              value="<%= typeof country !== 'undefined' ? country : '' %>"
-            />
-            <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+            <input class="form-control me-2 mobile-search-input" type="search" name="country" placeholder="Search destination" value="<%= typeof country !== 'undefined' ? country : '' %>">
+            <button class="btn btn-outline-primary" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
           </form>
         </div>
 
- 
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new">
-          <i class="bi bi-house-add me-1"></i> List Your Nest
+        <a class="nav-link professional-link host-link" href="/listings/new">
+          <i class="bi bi-house-add me-1"></i>
+          <span>Become a Host</span>
         </a>
 
         <% if (!currentUser) { %>
-          <a class="nav-link" href="/signup">
-            <i class="bi bi-person-plus me-1"></i> <b>Sign Up</b>
-          </a>
-          <a class="nav-link" href="/login">
-            <i class="bi bi-door-open me-1"></i> <b>Login</b>
-          </a>
-        <% } else { %>  
-          <a class="nav-link" href="/logout">
-            <i class="bi bi-box-arrow-right me-1"></i> <b>Log out</b>
-          </a>
-          <div class="nav-item dropdown ms-2">
-  <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-   <i class="bi bi-person-circle fs-4 text-primary"></i> &nbsp;My Account
-  </a>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-    <li><a class="dropdown-item" href="/user/<%= currentUser._id %>/listings"><i class="bi bi-house-door me-2"></i>My Listings</a></li>
-    <li><a class="dropdown-item" href="/user/<%= currentUser._id %>/booking"><i class="bi bi-calendar2-check me-2"></i> My Booking </a></li>
-    <li><a class="dropdown-item" href="/user/<%= currentUser._id %>"><i class="bi bi-person-lines-fill me-2"></i>Profile</a></li>
-  </ul>
-</div>
-
+          <div class="auth-section">
+            <a class="nav-link professional-link login-link" href="/login">
+              <i class="bi bi-person me-1"></i>
+              <span>Sign In</span>
+            </a>
+            <a class="btn btn-primary signup-btn" href="/signup">
+              <i class="bi bi-person-plus me-1"></i>
+              Sign Up
+            </a>
+          </div>
+        <% } else { %>
+ 
+          <div class="nav-item dropdown user-dropdown">
+            <a class="nav-link dropdown-toggle user-menu-toggle" href="#" id="userMenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="user-avatar">
+                <i class="bi bi-person-circle"></i>
+              </div>
+              <span class="user-name d-none d-md-inline"><%= currentUser.username || 'Account' %></span>
+            </a>
+            
+            <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu" aria-labelledby="userMenuDropdown">
+              <li class="dropdown-header">
+                <div class="user-info">
+                  <strong><%= currentUser.username || 'User' %></strong>
+                  <small>Welcome back!</small>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item" href="/user/<%= currentUser._id %>">
+                  <i class="bi bi-person-lines-fill me-2"></i>
+                  My Profile
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/user/<%= currentUser._id %>/listings">
+                  <i class="bi bi-house-door me-2"></i>
+                  My Properties
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/user/<%= currentUser._id %>/booking">
+                  <i class="bi bi-calendar2-check me-2"></i>
+                  My Bookings
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item text-danger" href="/logout">
+                  <i class="bi bi-box-arrow-right me-2"></i>
+                  Sign Out
+                </a>
+              </li>
+            </ul>
+          </div>
         <% } %>
       </div>
     </div>
   </div>
 </nav>
+<script>
+ document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.getElementById('mainNavbar');
+    let lastScrollTop = 0;
+    let scrollTimeout;
+  
+    function handleScroll() {
+        const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
+        if (currentScrollTop > 20) {
+            navbar.classList.add('navbar-scrolled');
+        } else {
+            navbar.classList.remove('navbar-scrolled');
+        }
+        
+        lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+    }
 
+    window.addEventListener('scroll', function() {
+        if (scrollTimeout) {
+            cancelAnimationFrame(scrollTimeout);
+        }
+        scrollTimeout = requestAnimationFrame(handleScroll);
+    }, { passive: true });
+    
+
+    const searchInput = document.querySelector('.search-input');
+    const searchWrapper = document.querySelector('.search-wrapper');
+    
+    if (searchInput && searchWrapper) {
+        searchInput.addEventListener('focus', function() {
+            searchWrapper.style.transform = 'translateY(-2px) scale(1.02)';
+        });
+        
+        searchInput.addEventListener('blur', function() {
+            searchWrapper.style.transform = 'translateY(0) scale(1)';
+        });
+        
+   
+        searchInput.addEventListener('input', function() {
+            const value = this.value.trim();
+            if (value.length > 2) {
+       
+                console.log('Search suggestions for:', value);
+            }
+        });
+    }
+
+    const mobileSearchInput = document.querySelector('.mobile-search-input');
+    if (mobileSearchInput) {
+        mobileSearchInput.addEventListener('focus', function() {
+            this.parentElement.style.transform = 'scale(1.02)';
+        });
+        
+        mobileSearchInput.addEventListener('blur', function() {
+            this.parentElement.style.transform = 'scale(1)';
+        });
+    }
+
+    const toggler = document.querySelector('.professional-toggler');
+    const collapse = document.querySelector('#navbarNavAltMarkup');
+    
+    if (toggler && collapse) {
+
+        collapse.addEventListener('show.bs.collapse', function() {
+            toggler.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+            this.style.transition = 'all 0.3s ease';
+        });
+        
+        collapse.addEventListener('hide.bs.collapse', function() {
+            toggler.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        });
+        
+        collapse.addEventListener('hidden.bs.collapse', function() {
+            document.body.style.overflow = '';
+        });
+    }
+    
+
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+        const menu = dropdown.querySelector('.dropdown-menu');
+        const toggle = dropdown.querySelector('[data-bs-toggle="dropdown"]');
+        
+        if (menu && toggle) {
+            dropdown.addEventListener('show.bs.dropdown', function() {
+                menu.style.display = 'block';
+                menu.style.opacity = '0';
+                menu.style.transform = 'translateY(-10px) scale(0.95)';
+                
+                requestAnimationFrame(() => {
+                    menu.style.transition = 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
+                    menu.style.opacity = '1';
+                    menu.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            dropdown.addEventListener('hide.bs.dropdown', function() {
+                menu.style.opacity = '0';
+                menu.style.transform = 'translateY(-10px) scale(0.95)';
+            });
+            
+            dropdown.addEventListener('hidden.bs.dropdown', function() {
+                menu.style.display = '';
+                menu.style.opacity = '';
+                menu.style.transform = '';
+                menu.style.transition = '';
+            });
+        }
+    });
+    
+
+    const professionalLinks = document.querySelectorAll('.professional-link');
+    professionalLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'scale(1.1) rotate(5deg)';
+            }
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            }
+        });
+    });
+
+    const userMenuToggle = document.querySelector('.user-menu-toggle');
+    if (userMenuToggle) {
+        userMenuToggle.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-1px)';
+        });
+        
+        userMenuToggle.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    }
+
+    document.addEventListener('keydown', function(e) {
+        // Close dropdowns on Escape
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                const dropdown = bootstrap.Dropdown.getInstance(menu.previousElementSibling);
+                if (dropdown) dropdown.hide();
+            });
+            
+      
+            if (collapse && collapse.classList.contains('show')) {
+                const collapseInstance = bootstrap.Collapse.getInstance(collapse);
+                if (collapseInstance) collapseInstance.hide();
+            }
+        }
+        
+
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+            const activeDropdown = document.querySelector('.dropdown-menu.show');
+            if (activeDropdown) {
+                const items = activeDropdown.querySelectorAll('.dropdown-item');
+                const currentFocus = document.activeElement;
+                const currentIndex = Array.from(items).indexOf(currentFocus);
+                
+                let nextIndex;
+                if (e.key === 'ArrowDown') {
+                    nextIndex = (currentIndex + 1) % items.length;
+                } else {
+                    nextIndex = (currentIndex - 1 + items.length) % items.length;
+                }
+                
+                items[nextIndex].focus();
+                e.preventDefault();
+            }
+        }
+    });
+    
+
+    const focusableElements = document.querySelectorAll(
+        '.professional-link, .search-input, .search-btn, .user-menu-toggle, .signup-btn, .dropdown-item'
+    );
+    
+    focusableElements.forEach(element => {
+        element.addEventListener('focus', function() {
+            this.style.outline = '2px solid var(--nestigo-primary)';
+            this.style.outlineOffset = '2px';
+        });
+        
+        element.addEventListener('blur', function() {
+            this.style.outline = '';
+            this.style.outlineOffset = '';
+        });
+    });
+    
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Element is visible, can add animations or effects
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+
+    const navElements = document.querySelectorAll('.professional-link, .search-wrapper');
+    navElements.forEach(el => observer.observe(el));
+    
+
+    if ('ontouchstart' in window) {
+
+        document.querySelectorAll('.professional-link, .user-menu-toggle').forEach(element => {
+            element.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            }, { passive: true });
+            
+            element.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            }, { passive: true });
+        });
+    }
+
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        if (resizeTimeout) {
+            clearTimeout(resizeTimeout);
+        }
+        
+        resizeTimeout = setTimeout(() => {
+  
+            const windowWidth = window.innerWidth;
+            
+            if (windowWidth < 992 && collapse && collapse.classList.contains('show')) {
+    
+                const collapseInstance = bootstrap.Collapse.getInstance(collapse);
+                if (collapseInstance) collapseInstance.hide();
+            }
+        }, 250);
+    });
+});
+
+</script>

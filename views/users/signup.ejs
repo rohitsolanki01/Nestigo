@@ -1,32 +1,220 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="row mt-3">
-    <h1 class="col-12 text-center mt-3"> SignUp on Nestigo</h1>
-    <div class="col-6 offset-3" >
-        <form action="/signup" method="post" class="mt-3 needs-validation" novalidate>
+<div class="signup-container">
+    <div class="signup-wrapper">
 
-            <div class="mb-3">
-                <label for="username" class="form-label">Username:</label>
-                <input type="text" name="username"  class="form-control" required>
-                <div class="invalid-feedback">Please enter Username.</div>
-              </div>
+        <div class="signup-form-section">
+            <div class="form-container">
+                <div class="form-header">
+                    <div class="brand-logo">
+                        <div class="logo-icon">
+                           <img src="/accets/logo.png" alt="not found" height="60px" width="60px"> 
+                        </div>
+                        <span class="brand-name">Welcome !!</span>
+                    </div>
+                    <h1>Create Account</h1>
+                    <p class="form-subtitle">Join our community and get started today</p>
+                </div>
 
-              <div class="mb-3">
-                <label for="email" class="form-label">Email:</label>
-                <input type="email" name="email"  class="form-control" required>
-                <div class="invalid-feedback">Please enter Email.</div>
-              </div>
+                <form action="/signup" method="post" class="signup-form needs-validation" novalidate>
+                    <div class="form-group">
+                        <label for="username" class="form-label">Username</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="text" 
+                                id="username"
+                                name="username" 
+                                class="form-control" 
+                                placeholder="Choose a username"
+                                required
+                                minlength="3"
+                            >
+                            <div class="input-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <div class="validation-check" style="display: none;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <polyline points="20,6 9,17 4,12"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback">Username must be at least 3 characters long.</div>
+                        <div class="field-hint">Choose a unique username that others will see</div>
+                    </div>
 
-              
-              <div class="mb-3">
-                <label for="password" class="form-label">Password:</label>
-                <input type="password" name="password"  class="form-control" required>
-                <div class="invalid-feedback">Please enter password.</div>
-              </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="email" 
+                                id="email"
+                                name="email" 
+                                class="form-control" 
+                                placeholder="Enter your email address"
+                                required
+                            >
+                            <div class="input-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </div>
+                            <div class="validation-check" style="display: none;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <polyline points="20,6 9,17 4,12"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                        <div class="field-hint">We'll use this to send you important updates</div>
+                    </div>
 
-              <button class="sign_up_btn">SignUp</button>
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="password"
+                                name="password" 
+                                class="form-control" 
+                                placeholder="Create a strong password"
+                                required
+                                minlength="6"
+                            >
+                            <div class="input-icon password-toggle" onclick="togglePassword('password')">
+                                <svg id="eye-open-pass" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <svg id="eye-closed-pass" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display: none;">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback">Password must be at least 6 characters long.</div>
+                        
+                        <!-- Password Strength Indicator -->
+                        <div class="password-strength">
+                            <div class="strength-meter">
+                                <div class="strength-fill"></div>
+                            </div>
+                            <span class="strength-text">Password strength</span>
+                        </div>
+                    </div>
 
-        </form>
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="confirmPassword"
+                                name="confirmPassword" 
+                                class="form-control" 
+                                placeholder="Confirm your password"
+                                required
+                            >
+                            <div class="input-icon password-toggle" onclick="togglePassword('confirmPassword')">
+                                <svg id="eye-open-confirm" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <svg id="eye-closed-confirm" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display: none;">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </div>
+                            <div class="validation-check" style="display: none;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <polyline points="20,6 9,17 4,12"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback">Passwords do not match.</div>
+                    </div>
 
-     </div>
- </div>
+                    <div class="form-group">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms" class="checkbox-label">
+                                I agree to the <a href="/terms" target="_blank">Terms of Service</a> and 
+                                <a href="/privacy" target="_blank">Privacy Policy</a>
+                            </label>
+                        </div>
+                        <div class="invalid-feedback">Please accept the terms and conditions.</div>
+                    </div>
+
+                    <button type="submit" class="signup-btn">
+                        <span class="btn-text">Create Account</span>
+                        <div class="btn-loader" style="display: none;">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </form>
+
+                <div class="form-footer">
+                    <p>Already have an account? <a href="/login" class="login-link">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right side - Illustration -->
+        <div class="signup-illustration">
+            <div class="illustration-content">
+                <div class="welcome-text">
+                    <h2>Join Nestigo Today!</h2>
+                    <p>Create your account and become part of our growing community</p>
+                </div>
+                
+                <!-- Animated Illustration -->
+                <div class="signup-graphic">
+                    <div class="main-circle">
+                        <div class="inner-circle">
+                            <div class="user-avatar">
+                                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating Elements -->
+                    <div class="floating-elements">
+                        <div class="float-element email">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="float-element shield">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                        </div>
+                        <div class="float-element star">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white">
+                                <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"></polygon>
+                            </svg>
+                        </div>
+                        <div class="float-element heart">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Connection Lines -->
+                    <div class="connection-lines">
+                        <div class="line line-1"></div>
+                        <div class="line line-2"></div>
+                        <div class="line line-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

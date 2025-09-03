@@ -167,3 +167,285 @@ document.addEventListener('DOMContentLoaded', function () {
 
     calculateNights();
   });
+
+
+
+
+function togglePassword() {
+  const passwordInput = document.getElementById('password');
+  const eyeOpen = document.getElementById('eye-open');
+  const eyeClosed = document.getElementById('eye-closed');
+  
+  if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      eyeOpen.style.display = 'none';
+      eyeClosed.style.display = 'block';
+  } else {
+      passwordInput.type = 'password';
+      eyeOpen.style.display = 'block';
+      eyeClosed.style.display = 'none';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('.login-form');
+  const inputs = form.querySelectorAll('.form-control');
+
+  inputs.forEach(input => {
+      input.addEventListener('input', function() {
+          validateField(this);
+      });
+      
+      input.addEventListener('blur', function() {
+          validateField(this);
+      });
+  });
+  
+
+  form.addEventListener('submit', function(e) {
+      let isValid = true;
+      
+      inputs.forEach(input => {
+          if (!validateField(input)) {
+              isValid = false;
+          }
+      });
+      
+      if (isValid) {
+          const submitBtn = form.querySelector('.login-btn');
+          const btnText = submitBtn.querySelector('.btn-text');
+          const btnLoader = submitBtn.querySelector('.btn-loader');
+          
+          submitBtn.disabled = true;
+          btnText.style.display = 'none';
+          btnLoader.style.display = 'block';
+      } else {
+          e.preventDefault();
+      }
+  });
+  
+  function validateField(field) {
+      const value = field.value.trim();
+      
+      if (field.hasAttribute('required') && value === '') {
+          field.classList.add('is-invalid');
+          return false;
+      } else {
+          field.classList.remove('is-invalid');
+          return true;
+      }
+  }
+});
+
+document.querySelectorAll('.form-control').forEach(input => {
+  input.addEventListener('focus', function() {
+      this.parentElement.style.transform = 'scale(1.02)';
+  });
+  
+  input.addEventListener('blur', function() {
+      this.parentElement.style.transform = 'scale(1)';
+  });
+});
+
+
+function togglePassword(fieldId) {
+  const passwordInput = document.getElementById(fieldId);
+  const eyeOpen = document.getElementById(`eye-open-${fieldId === 'password' ? 'pass' : 'confirm'}`);
+  const eyeClosed = document.getElementById(`eye-closed-${fieldId === 'password' ? 'pass' : 'confirm'}`);
+  
+  if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      eyeOpen.style.display = 'none';
+      eyeClosed.style.display = 'block';
+  } else {
+      passwordInput.type = 'password';
+      eyeOpen.style.display = 'block';
+      eyeClosed.style.display = 'none';
+  }
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('.signup-form');
+  const inputs = form.querySelectorAll('.form-control');
+  const passwordInput = document.getElementById('password');
+  const confirmPasswordInput = document.getElementById('confirmPassword');
+  
+
+  inputs.forEach(input => {
+      input.addEventListener('input', function() {
+          validateField(this);
+      });
+      
+      input.addEventListener('blur', function() {
+          validateField(this);
+      });
+  });
+
+  passwordInput.addEventListener('input', function() {
+      updatePasswordStrength(this.value);
+  });
+  
+
+  confirmPasswordInput.addEventListener('input', function() {
+      validatePasswordMatch();
+  });
+  
+
+  form.addEventListener('submit', function(e) {
+      let isValid = true;
+      
+      inputs.forEach(input => {
+          if (!validateField(input)) {
+              isValid = false;
+          }
+      });
+
+      const termsCheckbox = document.getElementById('terms');
+      if (!termsCheckbox.checked) {
+          termsCheckbox.classList.add('is-invalid');
+          isValid = false;
+      }
+      
+      if (isValid) {
+          const submitBtn = form.querySelector('.signup-btn');
+          const btnText = submitBtn.querySelector('.btn-text');
+          const btnLoader = submitBtn.querySelector('.btn-loader');
+          
+          submitBtn.disabled = true;
+          btnText.style.display = 'none';
+          btnLoader.style.display = 'block';
+      } else {
+          e.preventDefault();
+      }
+  });
+  
+  function validateField(field) {
+      const value = field.value.trim();
+      
+      if (field.hasAttribute('required') && value === '') {
+          field.classList.remove('is-valid');
+          field.classList.add('is-invalid');
+          hideValidationCheck(field);
+          return false;
+      }
+      
+
+      if (field.type === 'email') {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(value)) {
+              field.classList.remove('is-valid');
+              field.classList.add('is-invalid');
+              hideValidationCheck(field);
+              return false;
+          }
+      }
+      
+      // Username validation
+      if (field.name === 'username' && value.length < 3) {
+          field.classList.remove('is-valid');
+          field.classList.add('is-invalid');
+          hideValidationCheck(field);
+          return false;
+      }
+      
+      // Password validation
+      if (field.name === 'password' && value.length < 6) {
+          field.classList.remove('is-valid');
+          field.classList.add('is-invalid');
+          hideValidationCheck(field);
+          return false;
+      }
+      
+      field.classList.remove('is-invalid');
+      field.classList.add('is-valid');
+      showValidationCheck(field);
+      return true;
+  }
+  
+  function validatePasswordMatch() {
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+      
+      if (confirmPassword === '') return;
+      
+      if (password !== confirmPassword) {
+          confirmPasswordInput.classList.remove('is-valid');
+          confirmPasswordInput.classList.add('is-invalid');
+          hideValidationCheck(confirmPasswordInput);
+      } else {
+          confirmPasswordInput.classList.remove('is-invalid');
+          confirmPasswordInput.classList.add('is-valid');
+          showValidationCheck(confirmPasswordInput);
+      }
+  }
+  
+  function updatePasswordStrength(password) {
+      const strengthFill = document.querySelector('.strength-fill');
+      const strengthText = document.querySelector('.strength-text');
+      
+      let strength = 0;
+      let strengthLabel = 'Too weak';
+      let strengthColor = '#e53e3e';
+      
+
+      if (password.length >= 6) strength += 20;
+      if (password.length >= 8) strength += 20;
+      if (/[a-z]/.test(password)) strength += 20;
+      if (/[A-Z]/.test(password)) strength += 20;
+      if (/[0-9]/.test(password)) strength += 10;
+      if (/[^A-Za-z0-9]/.test(password)) strength += 10;
+      
+      if (strength >= 80) {
+          strengthLabel = 'Very strong';
+          strengthColor = '#38a169';
+      } else if (strength >= 60) {
+          strengthLabel = 'Strong';
+          strengthColor = '#68d391';
+      } else if (strength >= 40) {
+          strengthLabel = 'Good';
+          strengthColor = '#f6ad55';
+      } else if (strength >= 20) {
+          strengthLabel = 'Weak';
+          strengthColor = '#fc8181';
+      }
+      
+      strengthFill.style.width = strength + '%';
+      strengthFill.style.background = strengthColor;
+      strengthText.textContent = strengthLabel;
+      strengthText.style.color = strengthColor;
+  }
+  
+  function showValidationCheck(field) {
+      const validationCheck = field.parentElement.querySelector('.validation-check');
+      if (validationCheck) {
+          validationCheck.style.display = 'block';
+      }
+  }
+  
+  function hideValidationCheck(field) {
+      const validationCheck = field.parentElement.querySelector('.validation-check');
+      if (validationCheck) {
+          validationCheck.style.display = 'none';
+      }
+  }
+
+  document.getElementById('terms').addEventListener('change', function() {
+      if (this.checked) {
+          this.classList.remove('is-invalid');
+      }
+  });
+});
+
+
+document.querySelectorAll('.form-control').forEach(input => {
+  input.addEventListener('focus', function() {
+      this.parentElement.style.transform = 'scale(1.01)';
+  });
+  
+  input.addEventListener('blur', function() {
+      this.parentElement.style.transform = 'scale(1)';
+  });
+});
+
+

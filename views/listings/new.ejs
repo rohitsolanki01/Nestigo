@@ -1,64 +1,278 @@
 <% layout("/layouts/boilerplate.ejs") %>
-<body>
-  <div class="row">
-    <div class="col-8 offset-2" >
-  <h1 class="mt-3">Create New Listings</h1>
-  <form class="form needs-validation" class="mt-2" method="POST" action="/listings" novalidate enctype="multipart/form-data">
-    <div class="mb-3">
-      <label for="title" class="form-label">title</label>
-      <input type="text" name="listing[title]" placeholder="title" class="form-control" required>
-      <div class="invalid-feedback">Please enter a title.</div>
+<div class="create-listing-page">
+  <div class="form-container">
+    <div class="form-header">
+      <div class="header-content">
+        <div class="header-icon">
+          <i class="fas fa-plus-circle"></i>
+        </div>
+        <div class="header-text">
+          <h1>Create New Listing</h1>
+          <p>Share your amazing space with travelers around the world</p>
+        </div>
+      </div>
+      <div class="progress-indicator">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+        <span class="progress-text">Step 1 of 1</span>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="description" class="form-label">description</label>
-      <textarea name="listing[description]" placeholder="description"  class="form-control" required ></textarea>
-      <div class="invalid-feedback">Please enter a  short description.</div>
-    </div>
+
+    <div class="form-content">
+      <form class="professional-form needs-validation" method="POST" action="/listings" novalidate enctype="multipart/form-data">
+        
+
+        <div class="form-section">
+          <div class="section-header">
+            <h2><i class="fas fa-info-circle"></i> Basic Information</h2>
+            <p>Tell us about your property</p>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label for="title" class="form-label">
+                <span class="label-text">Property Title</span>
+                <span class="label-required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="text" 
+                  id="title"
+                  name="listing[title]" 
+                  placeholder="Enter a catchy title for your property"
+                  class="form-control" 
+                  required
+                >
+                <div class="input-icon">
+                  <i class="fas fa-home"></i>
+                </div>
+              </div>
+              <div class="invalid-feedback">Please enter a descriptive title for your property.</div>
+              <div class="form-hint">Make it catchy and descriptive to attract more guests</div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="description" class="form-label">
+                <span class="label-text">Description</span>
+                <span class="label-required">*</span>
+              </label>
+              <div class="textarea-wrapper">
+                <textarea 
+                  id="description"
+                  name="listing[description]" 
+                  placeholder="Describe your property, amenities, and what makes it special..."
+                  class="form-control textarea-large" 
+                  required
+                  rows="5"></textarea>
+                <div class="textarea-counter">
+                  <span class="char-count">0</span>/500
+                </div>
+              </div>
+              <div class="invalid-feedback">Please provide a detailed description of your property.</div>
+              <div class="form-hint">Highlight unique features, amenities, and nearby attractions</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group full-width">
+          <label for="image" class="form-label">
+            <span class="label-text">Property Photo</span>
+            <span class="label-required">*</span>
+          </label>
+          <div class="file-upload-area" id="fileUploadArea">
+            <input type="file" name="listing[image][url]" id="image" class="file-input" required accept="image/*">
+            
+ 
+            <div class="upload-content" id="uploadContent">
+              <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+              </div>
+              <div class="upload-text">
+                <h3>Drop your image here or click to browse</h3>
+                <p>Supports: JPG, PNG, WEBP (Max: 5MB)</p>
+              </div>
+              <button type="button" class="upload-btn">Choose Photo</button>
+            </div>
+            
+ 
+            <div class="upload-loading" id="uploadLoading" style="display: none;">
+              <div class="upload-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+              </div>
+              <div class="loading-text">
+                <h3>Uploading your image...</h3>
+                <p>Please wait while we process your photo</p>
+              </div>
+              <div class="progress-bar-upload">
+                <div class="progress-fill-upload" id="uploadProgress"></div>
+              </div>
+            </div>
+            
   
-    <div class="mb-3">
-      <label for="image" class="form-label">Upload image</label>
-      <input type="file" name="listing[image][url]"  placeholder="Imagelink"  class="form-control" required>
-      </div>
+            <div class="file-preview" id="filePreview" style="display: none;">
+              <div class="preview-image-container">
+                <img id="previewImage" src="" alt="Preview">
+                <div class="image-overlay">
+                  <div class="image-actions">
+                    <button type="button" class="change-image-btn" id="changeImage">
+                      <i class="fas fa-camera"></i>
+                      Change Photo
+                    </button>
+                    <button type="button" class="remove-file" id="removeFile">
+                      <i class="fas fa-trash"></i>
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="file-info">
+                <div class="file-details">
+                  <span class="file-name" id="fileName"></span>
+                  <span class="file-size" id="fileSize"></span>
+                </div>
+                <div class="upload-status">
+                  <i class="fas fa-check-circle"></i>
+                  <span>Upload Complete</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-hint">Choose the best photo that represents your property</div>
+        </div>
 
-    <div class="row">
-      <div class="mb-3 col-md-4">
-        <label for="price" class="form-label">price</label>
-        <input type="text" name="listing[price]"  placeholder="1200"  class="form-control" required>
-        <div class="invalid-feedback">Please enter a price.</div>
-      </div>
+        <!-- Pricing & Location Section -->
+        <div class="form-section">
+          <div class="section-header">
+            <h2><i class="fas fa-map-marker-alt"></i> Location & Pricing</h2>
+            <p>Set your location and nightly rate</p>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="price" class="form-label">
+                <span class="label-text">Price per Night</span>
+                <span class="label-required">*</span>
+              </label>
+              <div class="input-wrapper price-input">
+                <div class="currency-symbol">₹</div>
+                <input 
+                  type="number" 
+                  id="price"
+                  name="listing[price]" 
+                  placeholder="1200"
+                  class="form-control price-field" 
+                  required
+                  min="1"
+                >
+                <div class="price-suffix">per night</div>
+              </div>
+              <div class="invalid-feedback">Please enter a valid price.</div>
+              <div class="form-hint">Set a competitive rate for your area</div>
+            </div>
 
-      <div class="mb-3 col-md-8">
-        <label for="country" class="form-label">country</label>
-        <input type="text" name="listing[country]" placeholder="india"  class="form-control" required>
-        <div class="invalid-feedback">Please enter the country</div>
-      </div>
+            <div class="form-group">
+              <label for="country" class="form-label">
+                <span class="label-text">Country</span>
+                <span class="label-required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="text" 
+                  id="country"
+                  name="listing[country]" 
+                  placeholder="India"
+                  class="form-control" 
+                  required
+                >
+                <div class="input-icon">
+                  <i class="fas fa-globe"></i>
+                </div>
+              </div>
+              <div class="invalid-feedback">Please enter the country name.</div>
+            </div>
 
+            <div class="form-group full-width">
+              <label for="location" class="form-label">
+                <span class="label-text">City/Location</span>
+                <span class="label-required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="text" 
+                  id="location"
+                  name="listing[location]" 
+                  placeholder="e.g., Jaipur, Rajasthan"
+                  class="form-control" 
+                  required
+                >
+                <div class="input-icon">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <button type="button" class="location-btn" id="detectLocation">
+                  <i class="fas fa-crosshairs"></i>
+                  Detect
+                </button>
+              </div>
+              <div class="invalid-feedback">Please enter a valid location.</div>
+              <div class="form-hint">Be specific to help guests find your property easily</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-section">
+          <div class="section-header">
+            <h2><i class="fas fa-tags"></i> Property Category</h2>
+            <p>Choose the category that best describes your property</p>
+          </div>
+          
+          <div class="form-group full-width">
+            <label for="category" class="form-label">
+              <span class="label-text">Category</span>
+            </label>
+            <div class="select-wrapper">
+              <select name="listing[category]" id="category" class="form-select">
+                <option value="Trending" data-icon="fas fa-fire">🔥 Trending</option>
+                <option value="Rooms" data-icon="fas fa-bed">🛏️ Rooms</option>
+                <option value="Iconic City" data-icon="fas fa-city">🏙️ Iconic City</option>
+                <option value="Mountains" data-icon="fas fa-mountain">⛰️ Mountains</option>
+                <option value="Castles" data-icon="fas fa-chess-rook">🏰 Castles</option>
+                <option value="Arctic" data-icon="fas fa-snowflake">❄️ Arctic</option>
+                <option value="Camping" data-icon="fas fa-campground">⛺ Camping</option>
+                <option value="Farms" data-icon="fas fa-wheat-awn">🌾 Farms</option>
+                <option value="Forest" data-icon="fas fa-tree">🌲 Forest</option>
+              </select>
+              <div class="select-icon">
+                <i class="fas fa-chevron-down"></i>
+              </div>
+            </div>
+            <div class="form-hint">This helps guests discover your property type</div>
+          </div>
+        </div>
+
+
+        <div class="form-actions">
+          <div class="action-content">
+            <div class="action-info">
+              <h3>Ready to list your property?</h3>
+              <p>Review your information and create your listing</p>
+            </div>
+            <button type="submit" class="submit-btn">
+              <span class="btn-content">
+                <i class="fas fa-plus-circle"></i>
+                Create Listing
+              </span>
+              <div class="btn-loader" style="display: none;">
+                <div class="spinner"></div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-    
-    <div class="mb-3">
-      <label for="location" class="form-label">location</label>
-      <input type="text" name="listing[location]" placeholder="ex.jaipur"  class="form-control" required>
-      <div class="invalid-feedback">Please enter valid location.</div>
-    </div>
-    
-    <div class="mb-3">
-      <label for="category" class="form-label">category</label>
-      <select name="listing[category]" class="form-select">
-        <option value="Trending">Trending</option>
-        <option value="Rooms">Rooms</option>
-        <option value="Iconic City">Iconic City</option>
-        <option value="Mountains">Mountains</option>
-        <option value="Castles">Castles</option>
-        <option value="Arctic">Arctic</option>
-        <option value="Camping">Camping</option>
-        <option value="Farms">Farms</option>
-        <option value="Forest">Forest</option>
-      </select>
-    </div>
-   
-    
-    <button class="button">add </button>
-  </form>
+  </div>
 </div>
-</div>
-</body>

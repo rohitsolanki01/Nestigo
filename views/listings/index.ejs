@@ -1,86 +1,126 @@
-<% layout("/layouts/boilerplate.ejs") %>  
+<% layout("/layouts/boilerplate.ejs") %>
 
-  <div id="filters" class="cols-3">
-    <div class="filter">
-      <a href="/listings?category=Trending"><i class="fa-solid fa-fire"></i><div>Trending</div></a>
+<div class="listings-container">
+  <!-- Professional Filter Section -->
+  <div class="filter-section">
+    <div class="filter-header">
+      <h1>Find Your Perfect Stay</h1>
     </div>
-
-    <div class="filter">
-      <a href="/listings?category=Rooms"><i class="fa-solid fa-bed"></i><div>Rooms</div></a>
-    </div>
-
-    <div class="filter">
-      <a href="/listings?category=Iconic City"><i class="fa-solid fa-city"></i><div>Iconic City</div></a>
-    </div>
-
-    <div class="filter">
-      <a href="/listings?category=Mountains"><i class="fa-solid fa-mountain"></i><div>Mountains</div></a>
-    </div>
-
-    <div class="filter">
-      <a href="/listings?category=Castles"><i class="fa-solid fa-chess-rook"></i><div>Castles</div></a>
-    </div>
-
-    <div class="filter">
-      <a href="/listings?category=Arctic"><i class="fa-solid fa-snowflake"></i><div>Arctic</div></a>
-    </div>
-
-    <div class="filter">
-      <a href="/listings?category=Camping"><i class="fa-solid fa-campground"></i><div>Camping</div></a>
-    </div>
-    <div class="filter">
-      <a href="/listings?category=Farms"><i class="fa-solid fa-wheat-awn"></i><div>Farms</div></a>
-    </div>
-
-    <div class="filter">
-      <a href="/listings?category=Forest"><i class="fa-solid fa-tree"></i><div>Forest</div></a>
-    </div>
-    <div class="text-toggle">
-      <div class="form-check-reverse form-switch">
-        <input
-          class="form-check-input "
-          type="checkbox"
-          role="switch"
-          id="switchCheckDefault"
-        />
-        <label class="form-check-label" for="switchCheckDefault"
-          >Display after tax</label
-        >
+    
+    <div class="filters-horizontal">
+      <div class="filter-item">
+        <a href="/listings?category=Trending" class="filter-link">
+          <i class="fa-solid fa-fire"></i>
+          <span>Trending</span>
+        </a>
       </div>
-    </div>
-  </div>
-
-  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-    <% for(let listing of allListings){ %>
-    <a class="link" href="/listings/<%= listing._id %>">
-      <div class="card col listing-card">
-        <img
-          src="<%= listing.image.url %>"
-          style="height: 20rem"
-          class="card-img-top"
-          alt="..."
-        />
-        <div class="card-body">
-          <p class="card-text">
-            <b> <%= listing.title %></b> <br />
-            &#8377;<%= listing.price ? listing.price.toLocaleString('en-IN') : 'N/A' %> / night
-            <i class="text-info" style="display: none;"> 
-              &nbsp; &nbsp;+18% GST: 
-              &#8377;<%= listing.price ? Math.round(listing.price * 0.18).toLocaleString('en-IN') : 'N/A' %>
-              <br/>
-              <span class="gst-total" style="color: black;">
-                Total: &#8377;<%= listing.price ? Math.round(listing.price * 1.18).toLocaleString('en-IN') : 'N/A' %> / night
-              </span>
-            </i>
-          </p>
+      <div class="filter-item">
+        <a href="/listings?category=Rooms" class="filter-link">
+          <i class="fa-solid fa-bed"></i>
+          <span>Rooms</span>
+        </a>
+      </div>
+      <div class="filter-item">
+        <a href="/listings?category=Iconic City" class="filter-link">
+          <i class="fa-solid fa-city"></i>
+          <span>Iconic City</span>
+        </a>
+      </div>
+      <div class="filter-item">
+        <a href="/listings?category=Mountains" class="filter-link">
+          <i class="fa-solid fa-mountain"></i>
+          <span>Mountains</span>
+        </a>
+      </div>
+      <div class="filter-item">
+        <a href="/listings?category=Castles" class="filter-link">
+          <i class="fa-solid fa-chess-rook"></i>
+          <span>Castles</span>
+        </a>
+      </div>
+      <div class="filter-item">
+        <a href="/listings?category=Arctic" class="filter-link">
+          <i class="fa-solid fa-snowflake"></i>
+          <span>Arctic</span>
+        </a>
+      </div>
+      <div class="filter-item">
+        <a href="/listings?category=Camping" class="filter-link">
+          <i class="fa-solid fa-campground"></i>
+          <span>Camping</span>
+        </a>
+      </div>
+      <div class="filter-item">
+        <a href="/listings?category=Farms" class="filter-link">
+          <i class="fa-solid fa-wheat-awn"></i>
+          <span>Farms</span>
+        </a>
+      </div>
+      <div class="filter-item">
+        <a href="/listings?category=Forest" class="filter-link">
+          <i class="fa-solid fa-tree"></i>
+          <span>Forest</span>
+        </a>
+      </div>
+      
+      <div class="tax-toggle">
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault" />
+          <label class="form-check-label" for="switchCheckDefault">Display total price</label>
         </div>
       </div>
-    </a>
-
-    <% } %>
-
+    </div>
   </div>
-</body>
+
+  <!-- Professional Listings Grid -->
+  <div class="listings-content">
+    <div class="listings-header">
+      <h2><%= allListings.length %> properties available</h2>
+    </div>
+
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+      <% for(let listing of allListings){ %>
+      <div class="col">
+        <a class="listing-link" href="/listings/<%= listing._id %>">
+          <div class="listing-card">
+            <div class="image-container">
+              <img src="<%= listing.image.url %>" class="listing-image" alt="<%= listing.title %>" />
+            </div>
+            
+            <div class="listing-content">
+              <h3 class="listing-title"><%= listing.title %></h3>
+              
+              <div class="pricing">
+                <div class="base-price">
+                  <span class="price">₹<%= listing.price ? listing.price.toLocaleString('en-IN') : 'N/A' %></span>
+                  <span class="period">/night</span>
+                </div>
+                
+                <div class="text-info tax-details" style="display: none;">
+                  <div class="tax-breakdown">
+                    <div class="tax-row">
+                      <span>Base price</span>
+                      <span>₹<%= listing.price ? listing.price.toLocaleString('en-IN') : 'N/A' %></span>
+                    </div>
+                    <div class="tax-row">
+                      <span>GST (18%)</span>
+                      <span>₹<%= listing.price ? Math.round(listing.price * 0.18).toLocaleString('en-IN') : 'N/A' %></span>
+                    </div>
+                    <div class="tax-total">
+                      <span>Total</span>
+                      <span>₹<%= listing.price ? Math.round(listing.price * 1.18).toLocaleString('en-IN') : 'N/A' %></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</div>
 
 <script>
   let textSwitch = document.getElementById("switchCheckDefault")
