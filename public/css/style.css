@@ -785,6 +785,7 @@ footer */
   
   .welcome-text h2 {
       font-size: 1.5rem;
+      margin-top: 1.5rem;
   }
   
   .login-form-section {
