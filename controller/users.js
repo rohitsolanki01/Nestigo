@@ -4,12 +4,12 @@ const User = require("../models/user.js")
 
 
 
-//given sign Up form
+
 module.exports.renderSignUpForm = (req,res) => {
     res.render("users/signup.ejs");
 }
 
-//store signUp to db 
+
 module.exports.signUp =  async (req,res,next) => {
     try{
         let {username , email , password} = req.body;
@@ -34,21 +34,21 @@ module.exports.signUp =  async (req,res,next) => {
 
 }
 
-//given form for the login
+
 
 module.exports.renderLoginForm = (req,res) => {
     res.render("users/login.ejs");
 }
 
 
-//login inn db 
+
 
 module.exports.login = async (req,res) => {
     req.flash("success", "Welcome back to Nestigo!");
     let redirectUrl = res.locals.redirectUrl || "/listings";
     res.redirect(redirectUrl);
 }
-//for LogOut 
+
 
 module.exports.logOut = (req,res,next) => {
     req.logOut( err => {
